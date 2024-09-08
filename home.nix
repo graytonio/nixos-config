@@ -3,6 +3,10 @@
   home.username = "graytonio";
   home.homeDirectory = "/home/graytonio";
 
+  imports = [
+    ./modules/shell
+  ];
+
   xresources.properties = {
     "Xcursor.size" = 16;
     "Xft.dpi" = 172;
@@ -27,16 +31,6 @@
     enable = true;
     userName = "Grayton Ward";
     userEmail = "graytonio.ward@gmail.com";
-  };
-
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = false;
-      aws.disabled = true;
-      gcloud.disabled = true;
-      line_break.disabled = true;
-    };
   };
 
   programs.alacritty = {
