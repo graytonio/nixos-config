@@ -104,6 +104,9 @@
     curl
   ];
   environment.variables.EDITOR = "vim";
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

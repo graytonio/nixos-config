@@ -5,6 +5,7 @@
 
   imports = [
     ./modules/shell
+    ./modules/programs
   ];
 
   xresources.properties = {
@@ -19,6 +20,7 @@
     jq
     eza
     fzf
+    bat
 
     cowsay
     which
