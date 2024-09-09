@@ -1,5 +1,6 @@
 {config, ...}: {
   imports = [
+    ./fish.nix
     ./starship.nix
   ];
 
