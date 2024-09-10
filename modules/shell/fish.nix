@@ -1,4 +1,4 @@
-{config, pkgs, ...}:{
+{ config, pkgs, ... }: {
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
@@ -12,11 +12,11 @@
       grep = "rg";
       la = "eza -a --color=always --group-directories-first --icons";
       ll = "eza -l --color=always --group-directories-first --icons";
-      ls = "eza -la --color=always --group-directories-first --icons"; 
+      ls = "eza -la --color=always --group-directories-first --icons";
     };
     functions = {
       tmux-sessionizer.body = ''
-        set -l selection (find ~/repos -mindepth 1 -maxdepth 1 -type d | fzf)
+        set -l selection (find ~ ~/repos -mindepth 1 -maxdepth 1 -type d | fzf)
         if test -z "$selection"
           return 0
         end

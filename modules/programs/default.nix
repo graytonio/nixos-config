@@ -1,11 +1,5 @@
-{config, pkgs, ...}: {
-  home.packages = with pkgs; [
-    btop
-    neofetch
-  ];
+{ config, pkgs, ... }: {
+  home.packages = with pkgs; [ btop neofetch ];
 
-  imports = [
-    ./tmux.nix
-    ./nvim
-  ];
+  imports = [ ./tmux.nix ./nvim ];
 }

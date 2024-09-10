@@ -1,9 +1,5 @@
-{pkgs, ...}: {
-  imports = [
-    ./alacritty.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./alacritty.nix ];
 
-  home.packages = with pkgs; [
-    vscode
-  ];
+  home.packages = with pkgs; [ vscode ];
 }

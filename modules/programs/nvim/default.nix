@@ -1,8 +1,5 @@
-{inputs, pkgs, ...}: {
-  imports = [
-    inputs.nixvim.homeManagerModules.nixvim
-    ./plugins
-  ];
+{ inputs, pkgs, ... }: {
+  imports = [ inputs.nixvim.homeManagerModules.nixvim ./plugins ];
 
   programs.nixvim = {
     enable = true;
@@ -13,12 +10,10 @@
 
     globals.mapleader = " ";
 
-    keymaps = [
-      {
-        mode = "n";
-        key = "<leader>pv";
-        action = "<cmd>Ex<CR>";
-      }
-    ];
+    keymaps = [{
+      mode = "n";
+      key = "<leader>pv";
+      action = "<cmd>Ex<CR>";
+    }];
   };
 }

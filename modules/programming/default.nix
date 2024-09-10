@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     # Programming languages
     go
@@ -6,6 +6,7 @@
     rustc
     python3
     pipenv
+    gcc
 
     # DevOps Tools
     kubectl
