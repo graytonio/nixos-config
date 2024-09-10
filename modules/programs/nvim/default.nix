@@ -9,6 +9,8 @@
     defaultEditor = true;
     vimAlias = true;
 
+    colorschemes.dracula.enable = true;
+
     globals.mapleader = " ";
 
     keymaps = [
