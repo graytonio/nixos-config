@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     # Programming languages
     go
@@ -12,7 +12,7 @@
     k9s
     helm
     kustomize
-    
+
     docker
     docker-buildx
     docker-compose
