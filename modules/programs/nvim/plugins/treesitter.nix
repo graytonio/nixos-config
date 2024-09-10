@@ -1,18 +1,23 @@
-{pkgs, ...}:{
+{pkgs, ...}: {
   programs.nixvim = {
-    plugins.treesitter = {
+    plugins.lsp = {
       enable = true;
-      auto_install = true;
-      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-	rust
-	go
-	python
-	json
-	yaml
-      ];
-      highlight = {
-        enable = true;
-	additional_vim_regex_highlighting = false;
+      
+      keymaps = {
+        lspBuf = {
+	  gd = "definition";
+	  gD = "references";
+	  gt = "type_definition";
+	  gi = "implementation";
+	  K = "hover";
+	  "<F2>" = "rename";
+	};
+      };
+
+      servers = {
+        gopls.enable = true;
+	jsonls.enable = true;
+	nixd.enable = true;
       };
     };
   };

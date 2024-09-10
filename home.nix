@@ -6,6 +6,7 @@
   imports = [
     ./modules/shell
     ./modules/programs
+    ./modules/gui
   ];
 
   xresources.properties = {
