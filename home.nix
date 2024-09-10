@@ -7,6 +7,7 @@
     ./modules/shell
     ./modules/programs
     ./modules/gui
+    ./modules/programming
   ];
 
   xresources.properties = {
