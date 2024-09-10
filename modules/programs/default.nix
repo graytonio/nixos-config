@@ -6,6 +6,6 @@
 
   imports = [
     ./tmux.nix
-    ./nvim.nix
+    ./nvim
   ];
 }

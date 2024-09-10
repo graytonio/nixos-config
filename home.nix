@@ -14,19 +14,8 @@
   };
 
   home.packages = with pkgs; [
-    neofetch
-    
-    ripgrep
-    jq
-    eza
-    fzf
-    bat
-
-    cowsay
     which
     glow    
-
-    btop
   ];
 
   programs.git = {
