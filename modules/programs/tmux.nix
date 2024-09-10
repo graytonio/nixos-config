@@ -4,6 +4,10 @@
     prefix = "C-Space";
     terminal = "tmux-256color";
     shell = "${pkgs.fish}/bin/fish";
+    
+    mouse = true;
+    baseIndex = 1;
+    historyLimit = 50000;
 
     plugins = with pkgs;
     [
@@ -19,6 +23,8 @@
     ];
 
     extraConfig = ''
+      set -g renumber-windows on
+
       bind "|" split-window -h -c "#{pane_current_path}"
       bind "\\" split-window -fh -c "#{pane_current_path}"
    
