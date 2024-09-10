@@ -14,6 +14,28 @@
       ll = "eza -l --color=always --group-directories-first --icons";
       ls = "eza -la --color=always --group-directories-first --icons"; 
     };
+    functions = {
+      tmux-sessionizer.body = ''
+        set -l selection (find ~/repos -mindepth 1 -maxdepth 1 -type d | fzf)
+        if test -z "$selection"
+          return 0
+        end
+
+        set -l selected_name (basename "$selection" | tr . _)
+        set -l tmux_running (pgrep tmux)
+
+        if test -z "$TMUX" && test -z "$tmux_running"
+          tmux new-session -s $selected_name -c $selection
+          return 0
+        end
+
+        if not tmux has-session -t=$selected_name 2> /dev/null
+          tmux new-session -ds $selected_name -c $selection
+        end
+
+        tmux switch-client -t $selected_name
+      '';
+    };
   };
 }
 

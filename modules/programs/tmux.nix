@@ -30,6 +30,8 @@
    
       bind "-" split-window -v -c "#{pane_current_path}"
       bind "_" split-window -fv -c "#{pane_current_path}"
+
+      bind -r f run-shell "tmux neww tmux-sessionizer"
     '';
   };
 }
