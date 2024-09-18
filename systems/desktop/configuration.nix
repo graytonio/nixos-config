@@ -31,13 +31,14 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.displayManager.sddm.wayland.enable = true;
+  services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-  };
+#  programs.hyprland = {
+#    enable = true;
+#    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+#  };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";

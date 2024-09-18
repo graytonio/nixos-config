@@ -11,10 +11,10 @@
       ../../modules/gaming
     ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
+#  wayland.windowManager.hyprland = {
+#    enable = true;
+#    xwayland.enable = true;
+#  };
 
   xresources.properties = {
     "Xcursor.size" = 16;
