@@ -82,7 +82,7 @@
 
     pkgs.swww # Wallpaper daemon
 
-    pkgs.rofi-wayload # App launcher
+    pkgs.rofi-wayland # App launcher
   ];
 
   xdg.portal.enable = true;
