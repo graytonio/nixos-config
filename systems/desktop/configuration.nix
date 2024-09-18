@@ -1,11 +1,7 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
     ./hardware-configuration.nix
   ];
 
@@ -15,7 +11,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos-laptop"; # Define your hostname.
+  networking.hostName = "gaming-desktop"; # Define your hostname.
 
   networking.networkmanager.enable = true;
 
@@ -37,21 +33,28 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
   };
+
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+    };
+  };
+
+  services.xserver.videoDrivers = ["amdgpu"];
 
   services.printing.enable = true;
 
+  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -59,6 +62,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    jack.enable = true;
   };
 
   users.users.graytonio = {
@@ -74,7 +78,26 @@
   programs.firefox.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  environment.systemPackages = with pkgs; [ git vim wget curl ];
+  environment.systemPackages = [ 
+    pkgs.git 
+    pkgs.vim
+    pkgs.wget
+    pkgs.curl
+
+    (pkgs.waybar.overrideAttrs (oldAttrs: { # Bar
+      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+    }))
+
+    pkgs.dunst # Notification daemon
+    pkgs.libnotify
+
+    pkgs.swww # Wallpaper daemon
+
+    pkgs.rofi-wayload # App launcher
+  ];
+
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
