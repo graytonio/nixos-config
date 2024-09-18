@@ -5,7 +5,7 @@
     gamescopeSession.enable = true;
   };
 
-  environment.systemPackage = with pkgs; [
+  home.packages = with pkgs; [
     mangohud
   ];
 }
