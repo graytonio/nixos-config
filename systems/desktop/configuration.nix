@@ -7,20 +7,14 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "gaming-desktop"; # Define your hostname.
-
+  networking.hostName = "gaming-desktop";
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "America/New_York";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
     LC_IDENTIFICATION = "en_US.UTF-8";
@@ -53,7 +47,6 @@
   services.xserver.videoDrivers = ["amdgpu"];
 
   services.printing.enable = true;
-
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -69,10 +62,6 @@
     isNormalUser = true;
     description = "Grayton Ward";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs;
-      [
-        #  thunderbird
-      ];
   };
 
   programs.firefox.enable = true;

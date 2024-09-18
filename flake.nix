@@ -16,7 +16,7 @@
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs };
+      specialArgs = { inherit inputs; };
       system = "x86_64-linux";
       modules = [
         ./systems/laptop/configuration.nix
@@ -31,7 +31,7 @@
     };
 
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs };
+      specialArgs = { inherit inputs; };
       system = "x86_64-linux";
       modules = [
         ./systems/desktop/configuration.nix
@@ -43,6 +43,6 @@
           home-manager.users.graytonio = import ./systems/desktop/home.nix;
         }
       ];
-    }
+    };
   };
 }
