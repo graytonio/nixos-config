@@ -27,9 +27,11 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  services.displayManager.sddm.enable = true;
+
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   };
 
   environment.sessionVariables = {
