@@ -27,6 +27,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  services.displayManager.sddm.wayland.enable = true;
   services.displayManager.sddm.enable = true;
 
   programs.hyprland = {
