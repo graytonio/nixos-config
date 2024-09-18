@@ -1,3 +1,5 @@
 { pkgs, ... }: {
-  home.packages = with pkgs; [ steam ];
+  imports = [
+    ./steam.nix
+  ];
 }
