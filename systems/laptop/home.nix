@@ -3,7 +3,7 @@
   home.homeDirectory = "/home/graytonio";
 
   imports =
-    [ ./modules/shell ./modules/programs ./modules/gui ./modules/programming ];
+    [ ../../modules/shell ../../modules/programs ../../modules/gui ../../modules/programming ];
 
   xresources.properties = {
     "Xcursor.size" = 16;
