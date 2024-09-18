@@ -52,6 +52,8 @@
     };
   };
 
+  programs.gamemode.enable = true;
+
   services.xserver.videoDrivers = ["amdgpu"];
 
   services.printing.enable = true;
