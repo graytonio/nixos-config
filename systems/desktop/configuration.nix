@@ -17,6 +17,14 @@
   networking.hostName = "gaming-desktop";
   networking.networkmanager.enable = true;
 
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 2022 8080 ];
+  };
+
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -95,6 +103,11 @@
 
     pkgs.rofi-wayland # App launcher
   ];
+ 
+  programs.streamdeck-ui = {
+    enable = true;
+    autoStart = true;
+  };
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

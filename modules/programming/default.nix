@@ -7,6 +7,7 @@
     python3
     pipenv
     gcc
+    gnumake
 
     # DevOps Tools
     kubectl
@@ -18,4 +19,10 @@
     docker-buildx
     docker-compose
   ];
+
+  programs.fish = {
+	shellAliases = {
+		k = "kubectl";
+	};
+  };
 }

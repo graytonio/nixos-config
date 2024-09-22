@@ -1,11 +1,6 @@
 {...}:
 {
-  services.spotifyd = {
+  programs.ncspot = {
     enable = true;
-    settings = {
-	global = {
-		username = "graytonio";
-	};
-    };
   };
 }
