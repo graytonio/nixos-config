@@ -83,6 +83,7 @@
     pkgs.wget
     pkgs.curl
 
+    pkgs.xwaylandvideobridge
     (pkgs.waybar.overrideAttrs (oldAttrs: { # Bar
       mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
     }))
