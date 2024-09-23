@@ -20,7 +20,11 @@
     }];
 
     extraConfig = ''
+      set -g allow-passthrough on
       set -g renumber-windows on
+
+      set -ga update-environment TERM
+      set -ga update-environment TERM_PROGRAM
 
       bind "|" split-window -h -c "#{pane_current_path}"
       bind "\\" split-window -fh -c "#{pane_current_path}"

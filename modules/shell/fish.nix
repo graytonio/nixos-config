@@ -20,7 +20,11 @@
         if test -z "$selection"
           return 0
         end
+        tmux-session $selection
+      '';
 
+      tmux-session.argumentNames = "selection";
+      tmux-session.body = ''
         set -l selected_name (basename "$selection" | tr . _)
         set -l tmux_running (pgrep tmux)
 
@@ -35,6 +39,14 @@
 
         tmux switch-client -t $selected_name
       '';
+
+      clone = {
+        argumentNames = "repo";
+        body = ''
+          set -l repo_name (basename $repo .git)
+          git clone $repo ~/repos/$repo_name
+        '';
+      };
     };
   };
 }
