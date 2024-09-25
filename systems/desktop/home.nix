@@ -9,19 +9,18 @@
       ../../modules/gui 
       ../../modules/programming 
       ../../modules/gaming
+      ../../modules/wm/hyprland.nix
     ];
-
-#  wayland.windowManager.hyprland = {
-#    enable = true;
-#    xwayland.enable = true;
-#  };
 
   xresources.properties = {
     "Xcursor.size" = 16;
     "Xft.dpi" = 172;
   };
 
-  home.packages = with pkgs; [ which glow ];
+  home.packages = with pkgs; [ 
+    which
+    glow
+  ];
 
   programs.git = {
     enable = true;

@@ -18,6 +18,7 @@
     k9s
     helm
     kustomize
+    awscli2
 
     docker
     docker-buildx

@@ -43,10 +43,9 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-#  programs.hyprland = {
-#    enable = true;
-#    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-#  };
+  programs.hyprland = {
+    enable = true;
+  };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
@@ -90,18 +89,6 @@
     pkgs.vim
     pkgs.wget
     pkgs.curl
-
-    pkgs.xwaylandvideobridge
-    (pkgs.waybar.overrideAttrs (oldAttrs: { # Bar
-      mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-    }))
-
-    pkgs.dunst # Notification daemon
-    pkgs.libnotify
-
-    pkgs.swww # Wallpaper daemon
-
-    pkgs.rofi-wayland # App launcher
   ];
  
   programs.streamdeck-ui = {

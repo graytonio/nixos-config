@@ -14,7 +14,7 @@
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
@@ -36,6 +36,7 @@
       system = "x86_64-linux";
       modules = [
         ./systems/desktop/configuration.nix
+	hyprland.nixosModules.default
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
