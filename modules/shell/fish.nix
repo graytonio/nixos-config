@@ -13,6 +13,8 @@
       la = "eza -a --color=always --group-directories-first --icons";
       ll = "eza -l --color=always --group-directories-first --icons";
       ls = "eza -la --color=always --group-directories-first --icons";
+
+      nixgc = "nix-env --delete-generations 1d && nix-store --gc";
     };
     functions = {
       tmux-sessionizer.body = ''
