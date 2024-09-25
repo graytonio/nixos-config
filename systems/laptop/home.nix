@@ -18,6 +18,12 @@
     userEmail = "graytonio.ward@gmail.com";
   };
 
+  programs.fish = {
+    shellAliases = {
+      nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#laptop";
+    };
+  };
+
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
 }
