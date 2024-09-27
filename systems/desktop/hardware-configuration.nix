@@ -24,6 +24,11 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  fileSystems."/run/media/graytonio/Games" = 
+    { device = "/dev/disk/by-uuid/14d4bd9f-519a-40a6-8fd1-4635d0a3c17d";
+      fsType = "ext4";
+    };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

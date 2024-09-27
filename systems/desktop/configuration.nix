@@ -19,7 +19,7 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 2022 8080 ];
+    allowedTCPPorts = [ 2022 8080 57621 5353 ];
   };
 
   hardware.bluetooth.enable = true;
@@ -60,7 +60,6 @@
   };
 
   programs.gamemode.enable = true;
-
   services.xserver.videoDrivers = ["amdgpu"];
 
   services.printing.enable = true;
@@ -95,6 +94,8 @@
     enable = true;
     autoStart = true;
   };
+
+  virtualisation.waydroid.enable = true;
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

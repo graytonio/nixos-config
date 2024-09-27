@@ -33,6 +33,7 @@
       bind "_" split-window -fv -c "#{pane_current_path}"
 
       bind -r f run-shell "tmux neww tmux-sessionizer"
+      bind -r a run-shell "tmux neww tmux-android-client"
     '';
   };
 }

@@ -42,6 +42,20 @@
         tmux switch-client -t $selected_name
       '';
 
+      tmux-android-client.body = ''
+	set -l SESSION_NAME "android"
+	set -l COMMAND "waydroid show-full-ui"
+
+	tmux-session $SESSION_NAME
+
+	set -l WINDOW_IDEX 1
+	set -l WINDOW_IDEX (tmux list-windows -t $SESSION_NAME -F "#{window_index}:#{window_name}" | grep "^$WINDOW_INDEX:" | cut -d: -f2)
+
+	if not tmux list-panes -t "$SESSION_NAME:$WINDOW_NAME" -F "#{pane_title}" | grep -q "$COMMAND"
+          tmux send-keys -t "$SESSION_NAME:$WINDOW_INDEX" "$COMMAND" Enter
+        end
+      '';
+
       clone = {
         argumentNames = "repo";
         body = ''

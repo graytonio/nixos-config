@@ -12,6 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    templ.url = "github:a-h/templ";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
