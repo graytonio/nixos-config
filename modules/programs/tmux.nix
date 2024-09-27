@@ -10,13 +10,13 @@
     historyLimit = 50000;
 
     plugins = with pkgs; [{
-      plugin = tmuxPlugins.dracula;
-      extraConfig = ''
-        set -g @dracula-plugins 'git'
-        set -g @dracula-show-powerline true
-        set -g @dracula-show-flags true
-        set -g @dracula-show-left-icon session
-      '';
+      plugin = tmuxPlugins.catppuccin;
+#      extraConfig = ''
+#        set -g @dracula-plugins 'git'
+#        set -g @dracula-show-powerline true
+#        set -g @dracula-show-flags true
+#        set -g @dracula-show-left-icon session
+#      '';
     }];
 
     extraConfig = ''

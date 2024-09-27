@@ -6,7 +6,13 @@
     defaultEditor = true;
     vimAlias = true;
 
-    colorschemes.dracula.enable = true;
+    #colorschemes.dracula.enable = true;
+    colorschemes.catppuccin = {
+	enable = true;
+	settings = {
+	  flavor = "mocha";
+    	};
+    };
 
     globals.mapleader = " ";
 
