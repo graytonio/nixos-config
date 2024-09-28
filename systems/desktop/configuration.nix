@@ -88,6 +88,7 @@
     pkgs.vim
     pkgs.wget
     pkgs.curl
+    pkgs.pwvucontrol
   ];
  
   programs.streamdeck-ui = {

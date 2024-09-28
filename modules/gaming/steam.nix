@@ -4,5 +4,6 @@
     steam
     mangohud
     protonup
+    gamescope
   ];
 }

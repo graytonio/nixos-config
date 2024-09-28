@@ -9,7 +9,7 @@
       ../../modules/gui 
       ../../modules/programming 
       ../../modules/gaming
-      ../../modules/wm/hyprland.nix
+      ../../modules/wm/hyprland
     ];
 
   xresources.properties = {

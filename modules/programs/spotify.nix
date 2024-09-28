@@ -1,6 +1,7 @@
 {inputs, pkgs, ...}:
 let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
+  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in
 {
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];
@@ -16,7 +17,7 @@ in
   programs.spicetify = {
 	enable = true;
 	
-	spicetifyPackage = pkgs.unstable.spicetify-cli;
+	spicetifyPackage = unstable.spicetify-cli;
 
 	theme = spicePkgs.themes.catppuccin;
 	colorScheme = "mocha";

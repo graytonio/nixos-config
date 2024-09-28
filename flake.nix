@@ -18,12 +18,10 @@
 	url = "github:Gerg-L/spicetify-nix";
 	inputs.nixpkgs.follows = "nixpkgs";
     };
+    ags.url = "github:Aylur/ags";
   };
 
   outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
-
-    overlays = import ./overlays {inherit inputs;};
-
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };

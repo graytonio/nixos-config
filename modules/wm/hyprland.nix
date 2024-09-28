@@ -1,325 +1,346 @@
-{pkgs, ...}:
+{pkgs, lib, config, ...}:
 {
-   wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    settings = {
-  # Variables
-  "$mod" = "SUPER";
-  "$terminal" = "kitty";
-  "$fileManager" = "dolphin";
-  "$menu" = "rofi -show drun -show-icons";
-
-  "exec-once" = [
-    "swww-daemon"
-    "swww img ~/Pictures/Wallpapers/eepy-kebin.jpg"
-    "waybar"
-    "mako"
-  ];
-
-  # ENV
-  env = [
-    "XCURSOR_SIZE,24"
-    "HYPRCURSOR_SIZE,24"
-  ];
-
-  general = {
-    gaps_in = 5;
-    gaps_out = 20;
-
-    border_size = 2;
-    
-    "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-    "col.inactive_border" = "rgba(595959aa)";
-
-    resize_on_border = false;
-    allow_tearing = false;
-    layout = "dwindle";
-  };
-
-  decoration = {
-    rounding = 10;
-
-    active_opacity = 1.0;
-    inactive_opacity = 1.0;
-
-    drop_shadow = true;
-    shadow_range = 4;
-    shadow_render_power = 3;
-    "col.shadow" = "rgba(1a1a1aee)";
-
-    blur = {
-      enabled = true;
-      size = 3;
-      passes = 1;
-      vibrancy = 0.1696;
+  options = {
+    hyprlandMonitors = lib.mkOption {
+      default = [
+        ",preferred,auto,1"
+      ];
+      description = ''
+        hyprland monitor layouts
+      '';
     };
   };
 
-  dwindle = {
-    pseudotile = true; 
-    preserve_split = true;
-  };
+  config = {
+    wayland.windowManager.hyprland = {
+      enable = true;
+      xwayland.enable = true;
+      settings = {
+        # Variables
+        "$mod" = "SUPER";
+        "$terminal" = "kitty";
+        "$fileManager" = "dolphin";
+        "$menu" = "rofi -show drun -show-icons";
 
-  windowrulev2 = [
-    "workspace special, initialTitle:^(Spotify)(.*)$"
-  ];
+        "exec-once" = [
+          "swww-daemon"
+          "swww img ~/Pictures/Wallpapers/eepy-kebin.jpg"
+          "waybar"
+          "mako"
+        ];
 
-  workspace = [
-    "name:dev,monitor:DP-2,default:true,on-created-empty:kitty"
+        # ENV
+        env = [
+          "XCURSOR_SIZE,24"
+          "HYPRCURSOR_SIZE,24"
+        ];
 
-    "name:content,monitor:DP-1,default:true,on-created-empty:discord"
-    "name:stream,monitor:DP-1,on-created-empty:obs"
-  ];
+        general = {
+          gaps_in = 5;
+          gaps_out = 20;
 
-  master = {
-    new_status = "master";
-  };
+          border_size = 2;
+          
+          "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+          "col.inactive_border" = "rgba(595959aa)";
 
-  input = {
-    kb_layout = "us";
-    follow_mouse = 1;
-    touchpad = {
-      natural_scroll = false;
-    };
-  };
+          resize_on_border = false;
+          allow_tearing = false;
+          layout = "dwindle";
+        };
 
-  # Keybinds
-  bind = [
-    # System
-    "$mod, M, exit"
-    "$mod, C, killactive"
-    "$mod, V, togglefloating"
+        decoration = {
+          rounding = 10;
 
-    # Launch Programs
-    "$mod, R, exec, $menu"
-    "$mod, E, exec, firefox"
-    "$mod, Q, exec, $terminal"
+          active_opacity = 1.0;
+          inactive_opacity = 1.0;
 
-    # Change window focus
-    "$mod, left, movefocus, l"
-    "$mod, right, movefocus, r"
-    "$mod, up, movefocus, u"
-    "$mod, down, movefocus, d"
+          drop_shadow = true;
+          shadow_range = 4;
+          shadow_render_power = 3;
+          "col.shadow" = "rgba(1a1a1aee)";
 
-    # Scroll workspaces
-    "$mod, mouse_down, workspace, e+1"
-    "$mod, mouse_up, workspace, e-1"
+          blur = {
+            enabled = true;
+            size = 3;
+            passes = 1;
+            vibrancy = 0.1696;
+          };
+        };
 
-    "$mod, TAB, togglespecialworkspace"
+        dwindle = {
+          pseudotile = true; 
+          preserve_split = true;
+        };
 
-    "$mod, D, workspace, name:dev"
-    "$mod, F, workspace, name:content"
-    "$mod SHIFT, S, workspace, name:stream"
-  ] ++ (
-    builtins.concatLists (builtins.genList (i:
-            let ws = i + 1;
-            in [
-              "$mod, code:1${toString i}, workspace, ${toString ws}"
-              "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
-            ]
-          )
-          9)
-  );
+        windowrulev2 = [
+          "workspace special, initialTitle:^(Spotify)(.*)$"
+          "opacity 0.8, focus:0"
+        ];
 
-  bindm = [ 
-    # Mouse Move Windows
-    "$mod, mouse:272, movewindow"
-    "$mod, mouse:273, resizewindow"
-  ];
+        workspace = [
+          "name:dev,monitor:DP-2,default:true,on-created-empty:kitty"
+          "name:game,monitor:DP-2,on-created-empty:steam"
 
-  monitor = [
-    "DP-2,preferred,0x0,1"
-    "DP-1,preferred,-1440x-480,1,transform,1"
-  ];
-    };
-  };
+          "name:content,monitor:DP-1,default:true,on-created-empty:discord"
+          "name:stream,monitor:DP-1,on-created-empty:obs"
+        ];
 
-  programs.waybar = {
-    enable = true;
-    settings = {
-      mainBar = {
-         layer = "top";
-         position = "top";
-         spacing = 4;
-         output = [
-            "DP-1"
-            "DP-2"
-         ];
+        master = {
+          new_status = "master";
+        };
 
-         modules-left = [
-            "hyprland/workspaces"
-         ];
+        input = {
+          kb_layout = "us";
+          follow_mouse = 1;
+          touchpad = {
+            natural_scroll = false;
+          };
+        };
 
-         modules-center = [
-            "hyprland/window"
-         ];
+        # Keybinds
+        bind = [
+          # System
+          "$mod, M, exit"
+          "$mod, C, killactive"
+          "$mod, V, togglefloating"
 
-         modules-right = [
-            "pulseaudio"
-            "cpu"
-            "memory"
-            "clock"
-         ];
+          # Launch Programs
+          "$mod, R, exec, $menu"
+          "$mod, E, exec, firefox"
+          "$mod, Q, exec, $terminal"
 
-         "hyprland/workspaces" = {
-            disable-scroll = true;
-            all-outputs = true;
-         };
-  
-         "clock" = {
-            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-            format-alt = "{:%Y-%m-%d}";
-         };
+          # Change window focus
+          "$mod, left, movefocus, l"
+          "$mod, right, movefocus, r"
+          "$mod, up, movefocus, u"
+          "$mod, down, movefocus, d"
 
-         "cpu" = {
-            format = "{usage}% ";
-         };
+          # Scroll workspaces
+          "$mod, mouse_down, workspace, e+1"
+          "$mod, mouse_up, workspace, e-1"
 
-         "memory" = {
-            format = "{}% ";
-         };
+          "$mod, TAB, togglespecialworkspace"
+
+          "$mod, D, workspace, name:dev"
+          "$mod, F, workspace, name:content"
+          "$mod, G, workspace, name:game"
+          "$mod SHIFT, S, workspace, name:stream"
+        ] ++ (
+          builtins.concatLists (builtins.genList (i:
+                  let ws = i + 1;
+                  in [
+                    "$mod, code:1${toString i}, workspace, ${toString ws}"
+                    "$mod SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+                  ]
+                )
+                9)
+        );
+
+        bindm = [ 
+          # Mouse Move Windows
+          "$mod, mouse:272, movewindow"
+          "$mod, mouse:273, resizewindow"
+        ];
+
+        # monitor = [
+        #   "DP-2,preferred,0x0,1"
+        #   "DP-1,preferred,-1440x-480,1,transform,1"
+        # ];
+        monitor = config.hyprlandMonitors;
       };
     };
 
-    style = ''
-      * {
-          border: none;
-          border-radius: 0;
-          font-family: "Ubuntu Nerd Font";
-          font-size: 13px;
-          min-height: 0;
-      }
+    programs.waybar = {
+      enable = true;
+      settings = {
+        mainBar = {
+          layer = "top";
+          position = "top";
+          spacing = 4;
+          output = [
+              "DP-1"
+              "DP-2"
+          ];
 
-      window#waybar {
-          background: rgba(0,0,0,0.5);
-          color: white;
-      }
+          modules-left = [
+              "hyprland/workspaces"
+          ];
 
-      #window {
-          font-weight: bold;
-          font-family: "Ubuntu";
-      }
-      /*
-      #workspaces {
-          padding: 0 5px;
-      }
-      */
+          modules-center = [
+              "hyprland/window"
+          ];
 
-      #workspaces button {
-          padding: 0 5px;
-          background: transparent;
-          color: white;
-          border-top: 2px solid transparent;
-      }
+          modules-right = [
+              "pulseaudio"
+              "cpu"
+              "memory"
+              "clock"
+          ];
 
-      #workspaces button.focused {
-          color: #c9545d;
-          border-top: 2px solid #c9545d;
-      }
+          "hyprland/workspaces" = {
+              disable-scroll = true;
+              all-outputs = true;
+          };
+    
+          "clock" = {
+              tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+              format-alt = "{:%Y-%m-%d}";
+          };
 
-      #mode {
-          background: #64727D;
-          border-bottom: 3px solid white;
-      }
+          "cpu" = {
+              format = "{usage}% ";
+          };
 
-      #clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode {
-          padding: 0 3px;
-          margin: 0 2px;
-      }
+          "memory" = {
+              format = "{}% ";
+          };
 
-      #clock {
-          font-weight: bold;
-      }
+    "pulseaudio" = {
+        on-click = "pavucontrol";
+    };
+        };
+      };
 
-      #battery {
-      }
+      style = ''
+        * {
+            border: none;
+            border-radius: 0;
+            font-family: "Ubuntu Nerd Font";
+            font-size: 13px;
+            min-height: 0;
+        }
 
-      #battery icon {
-          color: red;
-      }
+        window#waybar {
+            background: rgba(0,0,0,0.5);
+            color: white;
+        }
 
-      #battery.charging {
-      }
+        #window {
+            font-weight: bold;
+            font-family: "Ubuntu";
+        }
+        /*
+        #workspaces {
+            padding: 0 5px;
+        }
+        */
 
-      @keyframes blink {
-          to {
-              background-color: #ffffff;
-              color: black;
-          }
-      }
+        #workspaces button {
+            padding: 0 5px;
+            background: transparent;
+            color: white;
+            border-top: 2px solid transparent;
+        }
 
-      #battery.warning:not(.charging) {
-          color: white;
-          animation-name: blink;
-          animation-duration: 0.5s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
-      }
+        #workspaces button.focused {
+            color: #c9545d;
+            border-top: 2px solid #c9545d;
+        }
 
-      #cpu {
-      }
+        #mode {
+            background: #64727D;
+            border-bottom: 3px solid white;
+        }
 
-      #memory {
-      }
+        #clock, #battery, #cpu, #memory, #network, #pulseaudio, #custom-spotify, #tray, #mode {
+            padding: 0 3px;
+            margin: 0 2px;
+        }
 
-      #network {
-      }
+        #clock {
+            font-weight: bold;
+        }
 
-      #network.disconnected {
-          background: #f53c3c;
-      }
+        #battery {
+        }
 
-      #pulseaudio {
-      }
+        #battery icon {
+            color: red;
+        }
 
-      #pulseaudio.muted {
-      }
+        #battery.charging {
+        }
 
-      #custom-spotify {
-          color: rgb(102, 220, 105);
-      }
+        @keyframes blink {
+            to {
+                background-color: #ffffff;
+                color: black;
+            }
+        }
 
-      #tray {
-      } 
-    '';
+        #battery.warning:not(.charging) {
+            color: white;
+            animation-name: blink;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        #cpu {
+        }
+
+        #memory {
+        }
+
+        #network {
+        }
+
+        #network.disconnected {
+            background: #f53c3c;
+        }
+
+        #pulseaudio {
+        }
+
+        #pulseaudio.muted {
+        }
+
+        #custom-spotify {
+            color: rgb(102, 220, 105);
+        }
+
+        #tray {
+        } 
+      '';
+    };
+
+    services.mako = {
+    enable = true; 
+    defaultTimeout = 2000;
+    backgroundColor = "#1E1E2E";
+    textColor = "#CDD6F4";
+    borderColor = "#89B4FA";
+    };
+
+    programs.rofi = {
+    enable = true;
+    package = pkgs.rofi-wayland;
+    theme = "catppuccin-mocha"; 
+    };
+
+    home.file.".local/share/rofi/themes/catppuccin-mocha.rasi".source = ./catppuccin-mocha.rasi;
+    
+    home.packages = with pkgs; [ 
+      # Status Bar
+      waybar
+      font-awesome
+
+      # Notifications
+      mako 
+      libnotify
+    
+      # App launcher
+      rofi-wayland
+
+      # Wallpaper
+      swww
+
+      # Screenshots
+      grim
+      slurp
+      wl-clipboard
+    ];
   };
-
-  services.mako = {
-   enable = true; 
-   defaultTimeout = 2000;
-   backgroundColor = "#1E1E2E";
-   textColor = "#CDD6F4";
-   borderColor = "#89B4FA";
-  };
-
-  programs.rofi = {
-   enable = true;
-   package = pkgs.rofi-wayland;
-   theme = "catppuccin-mocha"; 
-  };
-
-  home.file.".local/share/rofi/themes/catppuccin-mocha.rasi".source = ./catppuccin-mocha.rasi;
-  
-  home.packages = with pkgs; [ 
-    # Status Bar
-    waybar
-    font-awesome
-
-    # Notifications
-    mako 
-    libnotify
-  
-    # App launcher
-    rofi-wayland
-
-    # Wallpaper
-    swww
-
-    # Screenshots
-    grim
-    slurp
-    wl-clipboard
-  ];
 }
