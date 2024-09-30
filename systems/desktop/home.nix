@@ -17,6 +17,11 @@
     "Xft.dpi" = 172;
   };
 
+  home.sessionVariables = {
+    XCURSOR_SIZE = "24";
+    HYPRCURSOR_SIZE = "24";
+  };
+
   hyprlandMonitors = [
     "DP-1,preferred,0x0,1"
     "DP-2,preferred,-1440x-480,1,transform,1"

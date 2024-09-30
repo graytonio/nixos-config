@@ -107,8 +107,8 @@
 
 	workspace = 
  	let	
-	  monitor1 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 0)) 0;
-	  monitor2 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 1)) 0;
+	  monitor1 = builtins.elemAt (lib.strings.splitString "," (builtins.elemAt config.hyprlandMonitors 0)) 0;
+	  monitor2 = builtins.elemAt (lib.strings.splitString "," (builtins.elemAt config.hyprlandMonitors 1)) 0;
 	in 
 	[
 	  "name:dev${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},default:true,on-created-empty:$terminal"
