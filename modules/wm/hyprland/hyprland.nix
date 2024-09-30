@@ -16,6 +16,13 @@
 	path to wallpaper
       '';
     };
+
+    hyprlandWorkspaces = lib.mkOption {
+      default = [];
+      description = ''
+	hyprland workspace rules
+      '';
+    };
   };
 
   config = {
@@ -44,12 +51,6 @@
         xwayland = {
 	  force_zero_scaling = true;
 	};
-
-	# ENV Settings
-	env = [
-          "XCURSOR_SIZE,24"
-          "HYPRCURSOR_SIZE,24"
-        ];
 
 	# Basic Spacing and Layout
         general = {
@@ -104,39 +105,24 @@
 
 	monitor = config.hyprlandMonitors;
 
-	workspace = [
-	  "name:dev,monitor:DP-1,default:true,on-created-empty:$terminal"
-	  "name:game,border:false,rounding:false,monitor:DP-1,on-created-empty:steam"
-	  "name:browser,monitor:DP-1,on-created-empty:$browser"
-	  "name:content,monitor:DP-2,default:true,on-created-empty:$browser --new-window \"https://youtube.com\""
-	  "name:stream,monitor:DP-2"
+	workspace = 
+ 	let	
+	  monitor1 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 0)) 0;
+	  monitor2 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 1)) 0;
+	in 
+	[
+	  "name:dev${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},default:true,on-created-empty:$terminal"
+	  "name:game${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},border:false,rounding:false,on-created-empty:steam"
+	  "name:browser${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},on-created-empty:$browser"
+	  "name:content${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2}" else ""},default:true,on-created-empty:$browser --new-window \"https://youtube.com\""
+	  "name:stream${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2}" else ""}"
 	];
-
-	#workspace = (if builtins.length config.hyprlandMonitors == 1 then
-	#  [
-	#    "name:dev,default:true,on-created-empty:kitty"
-	#    "name:game,on-created-empty:steam"
-	#    "name:content,on-created-empty:discord"
-	#  ]
-	#else if builtins.length config.hyprlandMonitors == 2 then
-	#  let 
-	#    monitor1 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 0)) 0;
-	#    monitor2 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 1)) 0;
-	#  in [
-        #    "name:dev,monitor:${monitor1},default:true,on-created-empty:kitty"
-	#    "name:game,monitor:${monitor1},on-created-empty:steam"
-	#    
-	#    "name:content,monitor:${monitor2},default:true,on-created-empty:discord"
-	#    "name:stream,monitor:${moitor2},on-created-empty:obs"
-	#  ]
-	#else []
-	#);
 
 	input = {
 	  kb_layout = "us";
 	  follow_mouse = 1;
 	  touchpad = {
-	    natural_scroll = false;
+	    natural_scroll = true;
 	  };
 	};
 

@@ -22,17 +22,6 @@
     "DP-2,preferred,-1440x-480,1,transform,1"
   ];
 
-  home.packages = with pkgs; [ 
-    which
-    glow
-  ];
-
-  programs.git = {
-    enable = true;
-    userName = "Grayton Ward";
-    userEmail = "graytonio.ward@gmail.com";
-  };
-
   programs.fish = {
     shellAliases = {
       nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#desktop";

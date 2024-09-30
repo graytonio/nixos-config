@@ -3,19 +3,26 @@
   home.homeDirectory = "/home/graytonio";
 
   imports =
-    [ ../../modules/shell ../../modules/programs ../../modules/gui ../../modules/programming ];
+    [ 
+      ../../modules/shell 
+      ../../modules/programs 
+      ../../modules/gui 
+      ../../modules/programming 
+      ../../modules/wm/hyprland
+    ];
+
+  hyprlandMonitors = [
+    "eDP-1,preferred,0x0,2"
+  ];
 
   xresources.properties = {
     "Xcursor.size" = 16;
     "Xft.dpi" = 172;
   };
 
-  home.packages = with pkgs; [ which glow ];
-
-  programs.git = {
-    enable = true;
-    userName = "Grayton Ward";
-    userEmail = "graytonio.ward@gmail.com";
+  home.sessionVariables = {
+    XCURSOR_SIZE = "48";
+    HYPRCURSOR_SIZE = "48";
   };
 
   programs.fish = {
