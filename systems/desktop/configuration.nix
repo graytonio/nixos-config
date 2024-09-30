@@ -41,10 +41,12 @@
 
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
+  #services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   programs.hyprland = {
     enable = true;
+    xwayland.enable = true;
   };
 
   environment.sessionVariables = {
@@ -58,6 +60,8 @@
       driSupport32Bit = true;
     };
   };
+
+  programs.steam.enable = true;
 
   programs.gamemode.enable = true;
   services.xserver.videoDrivers = ["amdgpu"];

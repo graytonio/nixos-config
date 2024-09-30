@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
   home.username = "graytonio";
   home.homeDirectory = "/home/graytonio";
 
@@ -16,6 +16,11 @@
     "Xcursor.size" = 16;
     "Xft.dpi" = 172;
   };
+
+  hyprlandMonitors = [
+    "DP-1,preferred,0x0,1"
+    "DP-2,preferred,-1440x-480,1,transform,1"
+  ];
 
   home.packages = with pkgs; [ 
     which

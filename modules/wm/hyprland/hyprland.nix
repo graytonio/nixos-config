@@ -1,4 +1,4 @@
-{pkgs, lib, config, ...}:
+{lib, config, ...}:
 {
   options = {
     hyprlandMonitors = lib.mkOption {
@@ -27,6 +27,7 @@
         "$mod" = "SUPER";
         "$terminal" = "kitty";
         "$fileManager" = "dolphin";
+	"$browser" = "firefox";
         "$menu" = "rofi -show drun -show-icons";
 
 	# Startup Daemons
@@ -35,7 +36,14 @@
           "swww img ${config.hyprlandWallpaper}"
           "waybar"
           "mako"
+
+	  #"spotify"
+	  #"discord"
         ];
+
+        xwayland = {
+	  force_zero_scaling = true;
+	};
 
 	# ENV Settings
 	env = [
@@ -89,30 +97,40 @@
 
 	windowrulev2 = [
 	  "workspace special:spotify, initialTitle:^(Spotify)(.*)$"
-	  "opacity 0.8, focus:0"
+	  "workspace special:discord, class:^(discord)$"
+	  "monitor DP-2, class:^(Waydroid)$"
+	  "workspace name:stream, class:^(com.obsproject.Studio)$"
 	];
 
-	monitors = config.hyprlandMonitors;
+	monitor = config.hyprlandMonitors;
 
-	workspace = (if builtins.length config.hyprlandMonitors == 1 then
-	  [
-	    "name:dev,default:true,on-created-empty:kitty"
-	    "name:game,on-created-empty:steam"
-	    "name:content,on-created-empty:discord"
-	  ]
-	else if builtins.length config.hyprlandMonitors == 2 then
-	  let 
-	    monitor1 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 0)) 0;
-	    monitor2 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 1)) 0;
-	  in [
-            "name:dev,monitor:${monitor1},default:true,on-created-empty:kitty"
-	    "name:game,monitor:${monitor1},on-created-empty:steam"
-	    
-	    "name:content,monitor:${monitor2},default:true,on-created-empty:discord"
-	    "name:stream,monitor:${monitor2},on-created-empty:obs"
-	  ]
-	else []
-	);
+	workspace = [
+	  "name:dev,monitor:DP-1,default:true,on-created-empty:$terminal"
+	  "name:game,border:false,rounding:false,monitor:DP-1,on-created-empty:steam"
+	  "name:browser,monitor:DP-1,on-created-empty:$browser"
+	  "name:content,monitor:DP-2,default:true,on-created-empty:$browser --new-window \"https://youtube.com\""
+	  "name:stream,monitor:DP-2"
+	];
+
+	#workspace = (if builtins.length config.hyprlandMonitors == 1 then
+	#  [
+	#    "name:dev,default:true,on-created-empty:kitty"
+	#    "name:game,on-created-empty:steam"
+	#    "name:content,on-created-empty:discord"
+	#  ]
+	#else if builtins.length config.hyprlandMonitors == 2 then
+	#  let 
+	#    monitor1 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 0)) 0;
+	#    monitor2 = builtins.elemAt (lib.strings.splitString (builtins.elemAt config.hyprlandMonitors 1)) 0;
+	#  in [
+        #    "name:dev,monitor:${monitor1},default:true,on-created-empty:kitty"
+	#    "name:game,monitor:${monitor1},on-created-empty:steam"
+	#    
+	#    "name:content,monitor:${monitor2},default:true,on-created-empty:discord"
+	#    "name:stream,monitor:${moitor2},on-created-empty:obs"
+	#  ]
+	#else []
+	#);
 
 	input = {
 	  kb_layout = "us";
@@ -128,10 +146,11 @@
           "$mod, M, exit"
           "$mod, C, killactive"
           "$mod, V, togglefloating"
+	  "$mod, Home, exec, fish -c 'grim -l 0 -g (slurp) - | wl-copy'"
 
           # Launch Programs
           "$mod, R, exec, $menu"
-          "$mod, E, exec, firefox"
+          "$mod, E, exec, $browser"
           "$mod, Q, exec, $terminal"
 
           # Change window focus
@@ -144,12 +163,32 @@
           "$mod, mouse_down, workspace, e+1"
           "$mod, mouse_up, workspace, e-1"
 
+	  # "Minimize" Window
+	  "$mod, TAB, togglespecialworkspace, magic"
+	  "$mod, TAB, movetoworkspace, +0"
+	  "$mod, TAB, togglespecialworkspace, magic"
+	  "$mod, TAB, movetoworkspace, special:magic"
+	  "$mod, TAB, togglespecialworkspace, magic"
+
+	  # Special Workspaces
+	  "$mod, Z, togglespecialworkspace, spotify"
+	  "$mod, X, togglespecialworkspace, discord"
+
 	  # Named Workspaces
-	  "$mod, S, togglespecialworkspace spotify"
-	  "$mod, D, workspace, name:dev"
+	  "$mod, A, workspace, name:dev"
+	  "$mod SHIFT, A, movetoworkspace, name:dev"
+
+	  "$mod, S, workspace, name:game"
+	  "$mod SHIFT, S, movetoworkspace, name:game"
+
+	  "$mod, D, workspace, name:browser"
+	  "$mod SHIFT, D, movetoworkspace, name:browser"
+
 	  "$mod, F, workspace, name:content"
-	  "$mod, G, workspace, name:game"
-	  "$mod SHIFT, S, workspace, name:stream"
+	  "$mod SHIFT, F, movetoworkspace, name:content"
+	  
+	  "$mod, G, workspace, name:stream"
+	  "$mod SHIFT, G, movetoworkspace, name:stream"
 	] ++ (
 	  builtins.concatLists (builtins.genList(i:
 	    let ws = i + 1;

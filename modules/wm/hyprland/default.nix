@@ -1,41 +1,22 @@
-{pkgs, lib, config, ...}:
+{pkgs, ...}:
 {
-  options = {
-    hyprlandMonitors = lib.mkOption {
-      default = [
-        ",preferred,auto,1"
-      ];
-      description = ''
-        hyprland monitor layouts
-      '';
-    };
-
-    hyprlandWallpaper = lib.mkOption {
-      default = "~/Pictures/Wallpapers/evening-sky.png";
-      description = ''
-	path to wallpaper
-      '';
-    };
-  };
-  config = {
-    imports = [
+  imports = [
      ./hyprland.nix
      ./mako.nix
      ./rofi.nix
      ./waybar.nix
-    ];
+  ];
 
-    hyprlandMonitors = config.hyprlandMonitors;
-    hyprlandWallpaper = config.hyprlandWallpaper;
+  home.packages = with pkgs; [ 
+    # Widget Engine
+    eww
 
-    home.packages = with pkgs; [ 
-      # Wallpaper
-      swww
+    # Wallpaper
+    swww
 
-      # Screenshots
-      grim
-      slurp
-      wl-clipboard
-    ];
-  };
+    # Screenshots
+    grim
+    slurp
+    wl-clipboard
+  ];
 }

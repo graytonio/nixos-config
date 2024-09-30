@@ -1,10 +1,10 @@
-{pkgs, lib, config, ...}:
+{pkgs, ...}:
 {
   programs.waybar = {
     enable = true;
     settings = {
       mainBar = {
-	layer = "top";
+	layer = "bottom";
 	position = "top";
 	spacing = 4;	
         modules-left = [

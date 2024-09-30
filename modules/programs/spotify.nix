@@ -7,7 +7,7 @@ in
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];
 
   home.packages = [
-    #pkgs.spotify
+    pkgs.playerctl
   ];
 
   programs.ncspot = {

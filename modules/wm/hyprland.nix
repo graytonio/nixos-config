@@ -15,6 +15,13 @@
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
+
+      extraConfig = ''
+	xwayland {
+          force_zero_scaling = true
+        }
+      '';
+
       settings = {
         # Variables
         "$mod" = "SUPER";
@@ -28,6 +35,10 @@
           "waybar"
           "mako"
         ];
+
+        xwayland = {
+          force_zero_scaling = true;
+        };
 
         # ENV
         env = [
