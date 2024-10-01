@@ -1,0 +1,45 @@
+//@import url("path/to/common.css");
+
+// bar css
+// GTK CSS File for Eww
+* {
+    all: unset; //Unsets everything so you can style everything from scratch
+}
+
+button {
+    all: unset;
+    background-color: #1d212a;
+    padding: 10px;
+}
+
+.bar {
+    padding-top: 5px;
+}
+
+.bar box box box {
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 50px;
+    background-color: #1d212a;
+    color: #c2c6c3;
+}
+
+.bar-left {
+    margin-left: 10px;
+}
+
+.bar-left box:not(:first-child) {
+    margin-left: 10px;
+}
+
+.musicon {
+    color: #ff6969;
+    font-family: "Material Design Icons Desktop";
+    font-size: 16px;
+    padding-right: 6px;
+}
+
+.bar-player-title .musicon {
+    padding-right: 0px;
+    color: #1DB954;
+}

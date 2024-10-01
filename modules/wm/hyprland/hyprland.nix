@@ -41,8 +41,10 @@
         "exec-once" = [
           "swww-daemon"
           "swww img ${config.hyprlandWallpaper}"
-          "waybar"
+          #"waybar"
           "mako"
+	  
+	  "eww open bar"
 
 	  #"spotify"
 	  #"discord"

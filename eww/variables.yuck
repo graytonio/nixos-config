@@ -1,0 +1,14 @@
+(defpoll song_title :interval "1s"
+    "playerctl -p spotify metadata -f '{{title}}'")
+
+(defpoll song_artist :interval "1s"
+    "playerctl -p spotify metadata -f '{{artist}}'")
+
+(defpoll song_status :interval "1s"
+    "playerctl -p spotify status")
+
+(defpoll time :interval "1s"
+    "date +'%r'")
+
+(defpoll active-ws :interval "1s"
+    "hyprctl activeworkspace -j | jq -r '.name'")
