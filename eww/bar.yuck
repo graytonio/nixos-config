@@ -12,8 +12,8 @@
 (defwidget bar-left []
   (box :class "bar-left"
        :space-evenly false
+       :halign "start"
    (ws)
-   (time)
   )
 )
 
@@ -25,42 +25,17 @@
   )
 )
 
-
 (defwidget bar-right []
   (box :class "bar-right"
        :space-evenly false
+       :halign "end"
+    (wifi)
+    (bat)
+    (time)
   )
 )
 
-
-(defwidget currently-playing []
-  (box :class "bar-player-title"
-       :orientation "h"
-       :space-evenly false
-       :visible {song_status == "Playing"}
-    (box :space-evenly false
-      (box :class "musicon" "")
-      (box :class "song" "${song_title} - ${song_artist}")
-    )
-  )
-)
-
-(defwidget time []
-  (box :class "bar-time"
-       :orientation "h"
-       :space-evenly false
-    (box :class "time" "${time}")
-  )
-)
-
-(defwidget ws []
-  (box :class "bar-ws"
-       :orientation "h"
-    (box :class "ws" "${active-ws}")
-  )
-)
-
-(defwindow bar :stacking "overlay"
+(defwindow bar :stacking "fg"
                :monitor 0
                :geometry (geometry :x "0px"
                                    :y "0px"

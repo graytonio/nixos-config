@@ -14,14 +14,14 @@ button {
 
 .bar {
     padding-top: 5px;
+    color: #c2c6c3;
 }
 
 .bar box box box {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
     border-radius: 50px;
     background-color: #1d212a;
-    color: #c2c6c3;
 }
 
 .bar-left {
@@ -29,17 +29,34 @@ button {
 }
 
 .bar-left box:not(:first-child) {
-    margin-left: 10px;
+    margin-left: 5px;
 }
 
-.musicon {
-    color: #ff6969;
-    font-family: "Material Design Icons Desktop";
-    font-size: 16px;
-    padding-right: 6px;
+.bar-right {
+    margin-right: 10px;
+}
+
+.bar-right box:not(:last-child) {
+    margin-right: 5px;
+}
+
+.bar-wifi {
+    color: #a6e3a1;
+}
+
+.bar-ws {
+    color: #fab387;
+}
+
+.bar-time {
+    color: #89dceb;
+}
+
+.bar-bat {
+    color: #b4befe;
 }
 
 .bar-player-title .musicon {
-    padding-right: 0px;
+    padding-right: 5px;
     color: #1DB954;
 }

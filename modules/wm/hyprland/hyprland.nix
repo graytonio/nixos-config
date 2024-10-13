@@ -116,7 +116,7 @@
 	  "name:dev${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},default:true,on-created-empty:$terminal"
 	  "name:game${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},border:false,rounding:false,on-created-empty:steam"
 	  "name:browser${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},on-created-empty:$browser"
-	  "name:content${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2}" else ""},default:true,on-created-empty:$browser --new-window \"https://youtube.com\""
+	  "name:content${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2},default:true" else ""},on-created-empty:$browser --new-window \"https://youtube.com\""
 	  "name:stream${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2}" else ""}"
 	];
 
