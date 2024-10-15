@@ -42,7 +42,8 @@
           "swww-daemon"
           "swww img ${config.hyprlandWallpaper}"
           "mako"
-	  
+
+	  "eww daemon"
 	  "eww open bar"
         ];
 

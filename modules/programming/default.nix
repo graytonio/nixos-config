@@ -4,13 +4,16 @@
   };
 
   home.packages = with pkgs; [
-    # Programming languages
+    # Golang
     go
     gopls
     templ
 
+    # Rust
     cargo
     rustc
+
+    # Python
     python3
     pipenv
     gcc
