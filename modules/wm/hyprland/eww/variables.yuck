@@ -33,3 +33,6 @@
 
 (defpoll audio_mute :interval "1s"
     "wpctl get-volume @DEFAULT_AUDIO_SINK@")
+
+(deflisten notifs :initial ""
+  `python ~/.config/eww/scripts/notify.py`)
