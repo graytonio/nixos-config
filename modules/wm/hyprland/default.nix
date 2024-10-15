@@ -2,15 +2,13 @@
 {
   imports = [
      ./hyprland.nix
+     ./eww.nix
      ./mako.nix
      ./rofi.nix
      ./waybar.nix
   ];
 
   home.packages = with pkgs; [ 
-    # Widget Engine
-    eww
-
     # Wallpaper
     swww
 
