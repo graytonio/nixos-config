@@ -40,3 +40,11 @@
     (box :class "wifi" "󰖩   ${wifi_ssid}")
   )
 )
+
+(defwidget sound []
+  (button :class "bar-sound"
+  	  :onclick "pwvucontrol &"
+       :orientation "h"
+    (box :class "sound" "  ${audio_level}%")
+  )
+)

@@ -11,12 +11,6 @@
 
     plugins = with pkgs; [{
       plugin = tmuxPlugins.catppuccin;
-#      extraConfig = ''
-#        set -g @dracula-plugins 'git'
-#        set -g @dracula-show-powerline true
-#        set -g @dracula-show-flags true
-#        set -g @dracula-show-left-icon session
-#      '';
     }];
 
     extraConfig = ''
@@ -34,6 +28,11 @@
 
       bind -r f run-shell "tmux neww tmux-sessionizer"
       bind -r a run-shell "tmux neww tmux-android-client"
+
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
     '';
   };
 }

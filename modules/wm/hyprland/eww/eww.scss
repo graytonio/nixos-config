@@ -17,7 +17,8 @@ button {
     color: #c2c6c3;
 }
 
-.bar box box box {
+// Each widget box
+.bar box > * > * {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 50px;
@@ -28,7 +29,7 @@ button {
     margin-left: 10px;
 }
 
-.bar-left box:not(:first-child) {
+.bar-left > *:not(:first-child) {
     margin-left: 5px;
 }
 
@@ -36,7 +37,7 @@ button {
     margin-right: 10px;
 }
 
-.bar-right box:not(:last-child) {
+.bar-right > *:not(:last-child) {
     margin-right: 5px;
 }
 
@@ -59,4 +60,8 @@ button {
 .bar-player-title .musicon {
     padding-right: 5px;
     color: #1DB954;
+}
+
+.bar-sound {
+    color: #cba6f7;
 }

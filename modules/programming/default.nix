@@ -14,7 +14,10 @@
     rustc
 
     # Python
-    python3
+    (python311.withPackages (pythonPackages: with pythonPackages; [
+      dbus-python
+      pygobject3
+    ]))
     pipenv
     gcc
     gnumake
