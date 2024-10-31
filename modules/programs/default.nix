@@ -1,5 +1,9 @@
 { config, pkgs, ... }: {
   home.packages = with pkgs; [ btop neofetch ];
 
-  imports = [ ./tmux.nix ./nvim ./spotify.nix ];
+  imports = [
+    ./nvim 
+    ./spotify.nix 
+    ./yazi.nix
+  ];
 }
