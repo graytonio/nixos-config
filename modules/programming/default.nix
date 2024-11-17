@@ -3,6 +3,7 @@
     ./go.nix
     ./python.nix
     ./rust.nix
+    ./node.nix
 
     ./k8s.nix
   ];

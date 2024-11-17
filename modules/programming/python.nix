@@ -9,5 +9,5 @@
     ]))
     pipenv
     gcc # Required for cpython modules
-  ]
+  ];
 }

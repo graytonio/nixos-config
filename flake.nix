@@ -24,7 +24,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-darwin, home-manager, hyprland, ... }@inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
@@ -67,7 +67,7 @@
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users.graytonw = import ./systems/work/home.nix;
         }
-      ]
-    }
+      ];
+    };
   };
 }
