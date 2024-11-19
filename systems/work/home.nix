@@ -1,15 +1,13 @@
 {config, pkgs, ...}: {
-
   imports = [
     ../../modules/shell
-    ../../modules/programs
-    ../../modules/gui
+    ../../modules/programs/nvim.nix
     ../../modules/programming
   ];
 
   programs.fish = {
     shellAliases = {
-      nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#work";
+      nixup = "darwin-rebuild switch --flake ~/repos/nixos-config/#work";
     };
   };
 

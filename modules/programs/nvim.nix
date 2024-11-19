@@ -1,6 +1,12 @@
 { inputs, ... }: {
   imports = [ inputs.nixvim.homeManagerModules.nixvim ];
 
+  programs.fish = {
+    shellAliases = {
+      vim = "nvim";
+    };
+  };
+
   programs.nixvim = {
     enable = true;
     defaultEditor = true;

@@ -58,6 +58,7 @@
     };
 
     darwinConfigurations.work = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
       modules = [
         ./systems/work/configuration.nix
         home-manager.darwinModules.home-manager
