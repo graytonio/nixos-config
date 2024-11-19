@@ -4,6 +4,7 @@
     ./python.nix
     ./rust.nix
     ./node.nix
+    ./kotlin.nix
 
     ./k8s.nix
   ];
