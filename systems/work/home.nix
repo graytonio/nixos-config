@@ -3,6 +3,7 @@
     ../../modules/shell
     ../../modules/programs/nvim.nix
     ../../modules/programming
+    ../../modules/programming/apollo.nix
   ];
 
   programs.fish = {
