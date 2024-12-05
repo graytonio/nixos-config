@@ -3,6 +3,8 @@
     enable = true;
     interactiveShellInit = ''
       set fish_greeting # Disable greeting
+
+      fish_add_path $HOME/go/bin
     '';
     shellAliases = {
       tarnow = "tar -acf";
@@ -62,6 +64,13 @@
           set -l repo_name (basename $repo .git)
           git clone $repo ~/repos/$repo_name
         '';
+      };
+
+      envsource = {
+	argumentNames = "file";
+	body = ''
+	  eval (cat $file | sed -E 's/(.*)=(.*)/set -x \1 \2;/')
+	'';
       };
     };
   };
