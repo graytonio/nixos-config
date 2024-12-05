@@ -67,6 +67,7 @@
   services.xserver.videoDrivers = ["amdgpu"];
 
   services.printing.enable = true;
+
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -76,6 +77,14 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
+  };
+
+  services.pipewire.extraConfig.pipewire-pulse."20-pulse-properties.conf" = {
+    "pulse.properties" = {
+      "pulse.min.req" = "256/48000";
+      "pulse.min.frag" = "256/48000";
+      "pulse.min.quantum" = "256/48000";
+    };
   };
 
   users.users.graytonio = {

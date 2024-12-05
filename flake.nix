@@ -18,13 +18,14 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    hyprpanel.url = "github:Jas-SinghFSU/HyprPanel";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, hyprland, ... }@inputs: {
+  outputs = { self, nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, ... }@inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
@@ -46,7 +47,8 @@
       system = "x86_64-linux";
       modules = [
         ./systems/desktop/configuration.nix
-	      hyprland.nixosModules.default
+	hyprland.nixosModules.default
+	{nixpkgs.overlays = [hyprpanel.overlay];}
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

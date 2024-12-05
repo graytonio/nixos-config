@@ -39,12 +39,7 @@
 
 	# Startup Daemons
         "exec-once" = [
-          "swww-daemon"
-          "swww img ${config.hyprlandWallpaper}"
-          "mako"
-
-	  "eww daemon"
-	  "eww open bar"
+	  "hyprpanel"
         ];
 
         xwayland = {
