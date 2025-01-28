@@ -5,8 +5,12 @@
   imports =
     [ 
       ../../modules/shell 
-      ../../modules/programs 
-      ../../modules/gui 
+      ../../modules/programs/nvim
+      ../../modules/programs/yazi
+      ../../modules/gui/media
+      ../../modules/gui/kitty
+      ../../modules/gui/spotify
+      ../../modules/gui/discord
       ../../modules/programming 
       ../../modules/gaming
       ../../modules/wm/hyprland
@@ -27,6 +31,7 @@
     "DP-2,preferred,-1440x-480,1,transform,1"
   ];
 
+  
   programs.fish = {
     shellAliases = {
       nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#desktop";

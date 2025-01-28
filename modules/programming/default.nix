@@ -7,11 +7,14 @@
     ./kotlin.nix
 
     ./k8s.nix
+    ./ai.nix
   ];
 
   home.packages = with pkgs; [
+    vscode
     docker
     docker-buildx
     docker-compose
+    gnumake
   ];
 }

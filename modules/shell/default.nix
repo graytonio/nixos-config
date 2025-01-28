@@ -7,15 +7,13 @@
 
   home.packages = with pkgs; [ 
     which
-    ripgrep 
     jq
-    eza
-    fzf
-    bat
     direnv
     dust
     rsync
     rclone
+    btop
+    neofetch
   ];
 
   programs.git = {

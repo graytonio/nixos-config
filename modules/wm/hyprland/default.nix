@@ -2,16 +2,11 @@
 {
   imports = [
      ./hyprland.nix
-     #./eww.nix
-     ./mako.nix
      ./rofi.nix
-     ./waybar.nix
+     ./hyprpanel.nix
   ];
 
   home.packages = with pkgs; [ 
-    # Hyprpanel
-    hyprpanel
-
     # Wallpaper
     swww
 
@@ -19,5 +14,7 @@
     grim
     slurp
     wl-clipboard
+
+    xclicker
   ];
 }

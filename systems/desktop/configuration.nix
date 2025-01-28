@@ -24,6 +24,7 @@
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
 
   time.timeZone = "America/New_York";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -41,7 +42,6 @@
 
   services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
-  #services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   programs.hyprland = {
@@ -54,21 +54,20 @@
   };
 
   hardware = {
-    opengl = {
+    graphics = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      enable32Bit = true;
     };
   };
 
   programs.steam.enable = true;
+  programs.streamcontroller.enable = true;
 
   programs.gamemode.enable = true;
   services.xserver.videoDrivers = ["amdgpu"];
 
   services.printing.enable = true;
 
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -90,7 +89,7 @@
   users.users.graytonio = {
     isNormalUser = true;
     description = "Grayton Ward";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
   programs.firefox.enable = true;
@@ -104,12 +103,12 @@
     pkgs.pwvucontrol
   ];
  
-  programs.streamdeck-ui = {
-    enable = true;
-    autoStart = true;
-  };
-
   virtualisation.waydroid.enable = true;
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
 
   xdg.portal.enable = true;
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];

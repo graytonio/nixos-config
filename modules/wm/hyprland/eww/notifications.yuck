@@ -1,9 +1,0 @@
-(defwindow notifications
-           :monitor '["XV272U", "0"]'
-	   :stacking "overlay"
-	   :geometry (geometry :x "20px"
-	   	      	       :y "20px"
-			       :anchor "top right"
-		     ) 
-	(literal :content notifs)
-)

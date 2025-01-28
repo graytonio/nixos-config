@@ -68,11 +68,6 @@
           active_opacity = 1.0;
           inactive_opacity = 1.0;
 
-          drop_shadow = true;
-          shadow_range = 4;
-          shadow_render_power = 3;
-          "col.shadow" = "rgba(1a1a1aee)";
-
           blur = {
             enabled = true;
             size = 3;
@@ -169,6 +164,8 @@
 	  
 	  "$mod, G, workspace, name:stream"
 	  "$mod SHIFT, G, movetoworkspace, name:stream"
+	
+	  "$mod, grave, execr, fish -c 'grim -l 0 -g (slurp) - | wl-copy'"
 	] ++ (
 	  builtins.concatLists (builtins.genList(i:
 	    let ws = i + 1;

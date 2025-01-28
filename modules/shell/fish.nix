@@ -1,4 +1,12 @@
 { config, pkgs, ... }: {
+
+  home.packages = with pkgs; [
+    bat
+    ripgrep
+    eza
+    fzf
+  ];
+
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
