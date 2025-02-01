@@ -1,7 +1,7 @@
 {config, pkgs, ...}: {
   imports = [
     ../../modules/shell
-    ../../modules/programs/nvim.nix
+    ../../modules/programs/nvim
     ../../modules/programming
     ../../modules/programming/apollo.nix
   ];
