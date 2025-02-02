@@ -60,6 +60,13 @@
     };
   };
 
+  services.ollama = {
+    enable = true;
+    acceleration = "rocm";
+    rocmOverrideGfx = "11.0.0";
+  };
+  services.open-webui.enable = true;
+
   programs.steam.enable = true;
   programs.streamcontroller.enable = true;
 

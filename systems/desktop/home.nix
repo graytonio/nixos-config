@@ -40,6 +40,7 @@
 
   home.packages = with pkgs; [
     ventoy
+    rocmPackages.rocm-runtime
   ];
 
   home.stateVersion = "24.05";

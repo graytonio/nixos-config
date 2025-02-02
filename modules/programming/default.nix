@@ -17,5 +17,6 @@
     docker-compose
     lazydocker
     gnumake
+    pscale
   ];
 }
