@@ -23,6 +23,7 @@
       url = "github:LnL7/nix-darwin/nix-darwin-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    swww.url = "github:LGFae/swww";
   };
 
   outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, ... }@inputs: {

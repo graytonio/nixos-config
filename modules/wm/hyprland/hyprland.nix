@@ -40,7 +40,8 @@
 	# Startup Daemons
         "exec-once" = [
 	  "hyprpanel"
-        ];
+          "swww-daemon"
+	];
 
         xwayland = {
 	  force_zero_scaling = true;

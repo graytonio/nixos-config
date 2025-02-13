@@ -1,14 +1,13 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
 {
   imports = [
      ./hyprland.nix
      ./rofi.nix
      ./hyprpanel.nix
   ];
-
   home.packages = with pkgs; [ 
-    # Wallpaper
-    swww
+    # Wallpaper Daemon
+    inputs.swww.packages.${pkgs.system}.swww
 
     # Screenshots
     grim

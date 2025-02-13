@@ -17,8 +17,6 @@ in
   programs.spicetify = {
 	enable = true;
 	
-	spicetifyPackage = unstable.spicetify-cli;
-
 	theme = spicePkgs.themes.catppuccin;
 	colorScheme = "mocha";
 
