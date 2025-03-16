@@ -9,6 +9,7 @@
       pyautogui
     ]))
     pipenv
+    uv
     gcc # Required for cpython modules
   ];
 }

@@ -110,6 +110,8 @@
     pkgs.pwvucontrol
   ];
  
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "graytonio" ];
   virtualisation.waydroid.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {

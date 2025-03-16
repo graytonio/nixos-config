@@ -24,9 +24,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     swww.url = "github:LGFae/swww";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, ... }@inputs: {
+  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, ... }@inputs: {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
@@ -48,6 +52,7 @@
       system = "x86_64-linux";
       modules = [
         ./systems/desktop/configuration.nix
+	nur.modules.nixos.default
 	hyprland.nixosModules.default
 	{nixpkgs.overlays = [hyprpanel.overlay];}
         home-manager.nixosModules.home-manager
