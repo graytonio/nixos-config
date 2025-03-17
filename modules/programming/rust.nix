@@ -4,6 +4,14 @@
   };
 
   home.packages = with pkgs; [
+    openssl
+    pkg-config
+    cargo-deny
+    cargo-edit
+    cargo-watch
+    rust-analyzer
+
+    libiconv
     cargo
     rustc
   ];

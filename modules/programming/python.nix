@@ -6,7 +6,6 @@
       # Global python packages
       dbus-python
       pygobject3
-      pyautogui
     ]))
     pipenv
     uv

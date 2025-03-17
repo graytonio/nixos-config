@@ -8,6 +8,7 @@
   home.packages = with pkgs; [ 
     which
     jq
+    yq-go
     direnv
     dust
     rsync
