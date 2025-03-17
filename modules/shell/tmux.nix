@@ -33,6 +33,9 @@
       bind j select-pane -D
       bind k select-pane -U
       bind l select-pane -R
+
+      set -gu default-command
+      set -g default-shell "$SHELL"
     '';
   };
 }

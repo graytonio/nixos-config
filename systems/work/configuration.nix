@@ -17,6 +17,16 @@
   fonts.packages = with pkgs;
     [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
 
+  services.aerospace.enable = false;
+  services.aerospace.settings = {
+	accordion-padding = 300;
+	default-root-container-layout = "tiles";
+	default-root-container-orientation = "auto";
+	key-mapping = {
+	  preset = "qwerty";
+	};
+  };
+
   programs.fish.enable = true;
   system.stateVersion = 5;
   services.nix-daemon.enable = true;
