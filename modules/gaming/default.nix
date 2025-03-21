@@ -8,5 +8,6 @@
     wineWowPackages.waylandFull
     winetricks
     prismlauncher
+    samrewritten
   ];
 }
