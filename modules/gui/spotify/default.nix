@@ -1,7 +1,6 @@
 {inputs, pkgs, ...}:
 let
   spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.system};
-  unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
 in
 {
   imports = [ inputs.spicetify-nix.homeManagerModules.default ];

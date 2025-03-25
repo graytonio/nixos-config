@@ -1,4 +1,4 @@
-{lib, config, ...}:
+{lib, pkgs, inputs, config, ...}:
 {
   options = {
     hyprlandMonitors = lib.mkOption {
@@ -41,6 +41,12 @@
         "exec-once" = [
 	  "hyprpanel"
           "swww-daemon"
+	];
+
+	env = [
+         "XDG_CURRENT_DESKTOP,Hyprland"
+	 "XDG_SESSION_TYPE,wayland"
+	 "XDG_SESSION_DESKTOP,Hyprland"
 	];
 
         xwayland = {

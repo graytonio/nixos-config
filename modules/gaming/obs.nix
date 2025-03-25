@@ -1,8 +1,8 @@
-{pkgs, ... }:
+{pkgs, inputs, ... }:
 {
-  home.packages = with pkgs; [
-    obs-studio
-    chatterino2
-    obs-cmd
+  home.packages = [
+    pkgs.obs-studio
+    pkgs.chatterino2
+    pkgs.obs-cmd
   ];
 }

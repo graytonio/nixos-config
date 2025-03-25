@@ -1,5 +1,4 @@
 { config, pkgs, inputs, ... }:
-
 {
   imports = [
     ./hardware-configuration.nix
@@ -123,7 +122,8 @@
   xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
   fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+    #[ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+    [ nerd-fonts.fira-code ];
 
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
