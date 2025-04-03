@@ -15,7 +15,7 @@
   };
 
   fonts.packages = with pkgs;
-    [ (nerdfonts.override { fonts = [ "FiraCode" ]; }) ];
+    [ nerd-fonts.fira-code ];
 
   services.aerospace.enable = false;
   services.aerospace.settings = {
@@ -29,5 +29,4 @@
 
   programs.fish.enable = true;
   system.stateVersion = 5;
-  services.nix-daemon.enable = true;
 }

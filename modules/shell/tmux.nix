@@ -36,6 +36,19 @@
 
       set -gu default-command
       set -g default-shell "$SHELL"
+
+      set -g status-right-length 100
+      set -g status-left-length 100
+
+      set -g @catppuccin_window_default_text '#W'
+      set -g @catppuccin_window_current_text '#W'
+      set -g @catppuccin_window_text " #W"
+
+      set -g status-left ""
+      set -ag status-left "#{E:@catppuccin_status_session}"
+
+      set -g status-right ""
+      set -ag status-right "#{E:@catppuccin_status_date_time}"
     '';
   };
 }
