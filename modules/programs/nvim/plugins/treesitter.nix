@@ -1,24 +1,22 @@
 { pkgs, ... }: {
   programs.nixvim = {
-    plugins.lsp = {
+    plugins.treesitter = {
       enable = true;
 
-      keymaps = {
-        lspBuf = {
-          gd = "definition";
-          gD = "references";
-          gt = "type_definition";
-          gi = "implementation";
-          K = "hover";
-          "<F2>" = "rename";
+      settings = {
+        auto_install = true;
+        highlight = {
+          enable = true;
         };
       };
 
-      servers = {
-        gopls.enable = true;
-        jsonls.enable = true;
-        nixd.enable = true;
-      };
+      grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        rust
+        go
+        python
+        json
+        yaml
+      ];
     };
   };
 }
