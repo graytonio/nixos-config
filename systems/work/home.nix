@@ -10,6 +10,13 @@
     shellAliases = {
       nixup = "darwin-rebuild switch --flake ~/repos/nixos-config/#work";
     };
+
+    functions = {
+      slack-send.body = ''
+	cat /dev/stdin | string collect | begin echo '```'; cat; echo '```'; end | slack-cli send $to -
+      '';
+      slack-send.argumentNames = "to";
+    };
   };
 
   programs.tmux = {
