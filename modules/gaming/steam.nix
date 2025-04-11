@@ -5,5 +5,6 @@
     pkgs.mangohud
     pkgs.protonup
     pkgs.gamescope
+    pkgs.xivlauncher
   ];
 }
