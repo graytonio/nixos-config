@@ -69,6 +69,13 @@
   programs.steam.enable = true;
   programs.streamcontroller.enable = true;
 
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      "*/30 * * * *	root 	/home/graytonio/Documents/update.sh"
+    ];
+  };
+
   programs.gamemode.enable = true;
   services.xserver.videoDrivers = ["amdgpu"];
 

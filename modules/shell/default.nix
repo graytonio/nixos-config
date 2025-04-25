@@ -15,6 +15,7 @@
     rclone
     btop
     neofetch
+    unzip
   ];
 
   programs.git = {
