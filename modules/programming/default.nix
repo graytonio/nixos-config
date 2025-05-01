@@ -18,5 +18,6 @@
     lazydocker
     gnumake
     pscale
+    postgresql
   ];
 }
