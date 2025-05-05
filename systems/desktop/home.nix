@@ -11,8 +11,10 @@
       ../../modules/gui/kitty
       ../../modules/gui/spotify
       ../../modules/gui/discord
+      ../../modules/gui/obsidian
       ../../modules/programming 
       ../../modules/gaming
+      ../../modules/gaming/obs.nix
       ../../modules/wm/hyprland
     ];
 

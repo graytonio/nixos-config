@@ -6,9 +6,8 @@
     enable = true;
     overlay.enable = true;
     overwrite.enable = true;
-    theme = "catppuccin_mocha";
 
-    layout = {
+    settings.layout = {
       "bar.layouts" = {
         "0" = {
           left = [
@@ -44,6 +43,7 @@
     };
 
     settings = {
+      theme.name = "catppuccin_mocha";
       theme.bar.transparent = true;
       theme.bar.layer = "bottom";
     };
