@@ -24,6 +24,10 @@
       ll = "eza -l --color=always --group-directories-first --icons";
       ls = "eza -la --color=always --group-directories-first --icons";
 
+      gc = "git commit";
+      gs = "git status";
+      gb = "git checkout";
+
       nixgc = "nix-env --delete-generations 1d && nix-store --gc";
     };
     functions = {
