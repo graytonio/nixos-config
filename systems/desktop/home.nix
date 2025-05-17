@@ -13,6 +13,7 @@
       ../../modules/gui/discord
       ../../modules/gui/obsidian
       ../../modules/programming 
+      ../../modules/programming/spacetimedb.nix
       ../../modules/gaming
       ../../modules/gaming/obs.nix
       ../../modules/wm/hyprland
