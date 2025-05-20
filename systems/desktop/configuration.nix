@@ -99,6 +99,10 @@
     };
   };
 
+  programs.noisetorch = {
+    enable = true;
+  };
+
   users.users.graytonio = {
     isNormalUser = true;
     description = "Grayton Ward";

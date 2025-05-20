@@ -6,12 +6,12 @@
 	wlrobs
 	obs-pipewire-audio-capture
 	obs-backgroundremoval
-	obs-webkitgtk
     ];
   };
 
   home.packages = [
     pkgs.chatterino2
     pkgs.obs-cmd
+    pkgs.twitch-cli
   ];
 }
