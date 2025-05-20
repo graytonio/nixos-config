@@ -42,7 +42,6 @@
   };
 
   home.packages = with pkgs; [
-    ventoy
     rocmPackages.rocm-runtime
   ];
 
