@@ -16,6 +16,7 @@
     btop
     neofetch
     unzip
+    yt-dlp
   ];
 
   programs.git = {
