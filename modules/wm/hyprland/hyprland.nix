@@ -108,7 +108,7 @@
 	in 
 	[
 	  "name:dev${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},default:true,on-created-empty:$terminal"
-	  "name:game${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},border:false,rounding:false,on-created-empty:steam"
+	  "name:game${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""},border:false,rounding:false"
 	  "name:browser${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor1}" else ""}"
 	  "name:content${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2},default:true" else ""}"
 	  "name:stream${if builtins.length config.hyprlandMonitors > 1 then ",monitor:${monitor2}" else ""}"
@@ -128,6 +128,7 @@
           "$mod, M, exit"
           "$mod, C, killactive"
           "$mod, V, togglefloating"
+	  "$mod, B, fullscreen"
 	  "$mod, Home, exec, fish -c 'grim -l 0 -g (slurp) - | wl-copy'"
 
           # Launch Programs

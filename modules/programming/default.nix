@@ -11,6 +11,7 @@
   ];
 
   home.packages = with pkgs; [
+    just
     vscode
     docker
     docker-buildx
