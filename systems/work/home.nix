@@ -8,7 +8,7 @@
 
   programs.fish = {
     shellAliases = {
-      nixup = "darwin-rebuild switch --flake ~/repos/nixos-config/#work";
+      nixup = "sudo darwin-rebuild switch --flake ~/repos/nixos-config/#work";
     };
 
     functions = {

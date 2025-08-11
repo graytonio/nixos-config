@@ -17,6 +17,7 @@
     neofetch
     unzip
     yt-dlp
+    just
   ];
 
   programs.git = {

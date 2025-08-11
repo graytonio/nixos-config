@@ -5,6 +5,7 @@
     kubernetes-helm
     kustomize
     awscli2
+    minikube
   ];
 
   programs.fish = {
