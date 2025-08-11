@@ -30,8 +30,19 @@
     };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, ... }@inputs: {
+  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, ... }@inputs: 
+  let
+    pkgs = nixpkgs.legacyPackages.x86_64-linux;
+  in
+  {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+    homeConfigurations."graytonio" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = [
+        ./systems/shell/home.nix
+      ];
+    };
+    
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";
@@ -52,9 +63,9 @@
       system = "x86_64-linux";
       modules = [
         ./systems/desktop/configuration.nix
-	nur.modules.nixos.default
-	hyprland.nixosModules.default
-	{nixpkgs.overlays = [hyprpanel.overlay];}
+        nur.modules.nixos.default
+        hyprland.nixosModules.default
+        {nixpkgs.overlays = [hyprpanel.overlay];}
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
