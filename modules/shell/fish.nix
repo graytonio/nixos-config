@@ -13,6 +13,7 @@
       set fish_greeting # Disable greeting
 
       fish_add_path $HOME/go/bin
+      fish_add_path $HOME/.local/bin
     '';
     shellAliases = {
       tarnow = "tar -acf";
@@ -82,6 +83,79 @@
 	argumentNames = "file";
 	body = ''
 	  eval (cat $file | sed -E 's/(.*)=(.*)/set -x \1 \2;/')
+	'';
+      };
+
+      gac = {
+      	body = ''
+    # Check if there are staged changes
+    set -l staged_diff (git diff --cached)
+    
+    if test -z "$staged_diff"
+        echo "Error: No staged changes found. Stage your changes with 'git add' first."
+        return 1
+    end
+
+    # Get list of staged files for context
+    set -l staged_files (git diff --cached --name-only)
+    
+    echo "Staged files:"
+    for file in $staged_files
+        echo "  - $file"
+    end
+    echo ""
+    echo "Generating commit message..."
+
+    # Build the prompt
+    set -l prompt "You are a helpful assistant that writes concise git commit messages.
+Based on the following git diff of staged changes, write a short, clear commit message.
+Follow conventional commit format if appropriate (e.g., feat:, fix:, docs:, refactor:, etc.).
+Only output the commit message itself, nothing else. Keep it under 72 characters if possible.
+
+Staged files:
+$staged_files
+
+Diff:
+$staged_diff"
+
+    # Call ollama to generate the commit message
+    set -l commit_msg (echo $prompt | ollama run --think=false qwen3:8b 2>/dev/null)
+    
+    if test -z "$commit_msg"
+        echo "Error: Failed to generate commit message from ollama."
+        echo "Make sure ollama is running and the model is available."
+        return 1
+    end
+
+    # Clean up the message (remove leading/trailing whitespace and quotes)
+    set commit_msg (string trim $commit_msg)
+    set commit_msg (string trim --chars='"' $commit_msg)
+    
+    echo "Generated commit message:"
+    echo "  \"$commit_msg\""
+    echo ""
+    
+    # Ask for confirmation
+    read -l -P "Commit with this message? [Y/n/e(dit)] " confirm
+    
+    switch $confirm
+        case \'\' Y y yes Yes
+            git commit -m "$commit_msg"
+            echo "✓ Changes committed!"
+        case e E edit Edit
+            # Let user edit the message
+            read -l -P "Enter your commit message: " custom_msg
+            if test -n "$custom_msg"
+                git commit -m "$custom_msg"
+                echo "✓ Changes committed with custom message!"
+            else
+                echo "Aborted: No message provided."
+                return 1
+            end
+        case '*'
+            echo "Commit aborted."
+            return 1
+    end
 	'';
       };
     };

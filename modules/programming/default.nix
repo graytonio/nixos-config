@@ -7,7 +7,6 @@
     ./kotlin.nix
 
     ./k8s.nix
-    ./ai.nix
   ];
 
   home.packages = with pkgs; [

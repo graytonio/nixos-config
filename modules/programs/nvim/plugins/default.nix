@@ -1,7 +1,7 @@
 { 
   imports = [ 
-    ./telescope.nix 
     ./harpoon.nix 
+    ./telescope.nix 
     ./treesitter.nix 
     ./lsp.nix
     ./cmp.nix

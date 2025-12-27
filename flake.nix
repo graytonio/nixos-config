@@ -28,9 +28,18 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    homebrew-core = {
+      url = "github:homebrew/homebrew-core";
+      flake = false;
+    };
+    homebrew-cask = {
+      url = "github:homebrew/homebrew-cask";
+      flake = false;
+    };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, ... }@inputs: 
+  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, ... }@inputs: 
   let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
   in
@@ -86,6 +95,18 @@
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users.graytonw = import ./systems/work/home.nix;
+        }
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            enable = true;
+            enableRosetta = true;
+            user = "graytonw";
+            taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+            };
+          };
         }
       ];
     };
