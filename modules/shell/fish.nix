@@ -62,7 +62,7 @@
         set -l waiting_file ~/.local/share/tmux-claude-waiting
         set -l selected (
           tmux list-sessions -F "#{session_name}" | while read session
-            if test -f $waiting_file && grep -qx $session $waiting_file
+            if test -f $waiting_file && grep -qx "$session" $waiting_file
               echo "● $session"
             else
               echo "  $session"
@@ -71,7 +71,10 @@
         )
         test -z "$selected" && return 0
         set -l session_name (string sub -s 3 $selected)
-        sed -i "" "/^$session_name\$/d" $waiting_file 2>/dev/null
+        if test -f $waiting_file
+          set -l lines (grep -v "^$session_name\$" $waiting_file 2>/dev/null)
+          printf "%s\n" $lines > $waiting_file
+        end
         tmux switch-client -t $session_name
       '';
 
