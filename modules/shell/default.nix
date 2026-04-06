@@ -5,7 +5,7 @@
     ./tmux.nix
   ];
 
-  home.packages = with pkgs; [ 
+  home.packages = with pkgs; [
     which
     jq
     yq-go
@@ -17,6 +17,12 @@
     unzip
     yt-dlp
     just
+    (writeShellScriptBin "tmux-claude-status" ''
+      FILE="$HOME/.local/share/tmux-claude-waiting"
+      if [ -f "$FILE" ] && [ -s "$FILE" ]; then
+        echo "● claude"
+      fi
+    '')
   ];
 
   programs.git.settings = {

@@ -48,7 +48,10 @@
       set -g status-left ""
       set -ag status-left "#{E:@catppuccin_status_session}"
 
+      set -g status-interval 2
+
       set -g status-right ""
+      set -ag status-right "#(tmux-claude-status)"
       set -ag status-right "#{E:@catppuccin_status_date_time}"
     '';
   };
