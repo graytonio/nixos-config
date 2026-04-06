@@ -29,6 +29,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+    
+    # Homebrew Taps
     homebrew-core = {
       url = "github:homebrew/homebrew-core";
       flake = false;
@@ -37,9 +39,17 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    deskflow = {
+	url = "github:deskflow/homebrew-tap";
+	flake = false;
+    };
+    brief = {
+	url = "github:graytonio/brief";
+	flake = false;
+    };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, ... }@inputs: 
+  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, deskflow, brief, ... }@inputs: 
   let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
   in
@@ -102,12 +112,19 @@
             enable = true;
             enableRosetta = true;
             user = "graytonw";
+	    mutableTaps = false;
             taps = {
                 "homebrew/homebrew-core" = homebrew-core;
                 "homebrew/homebrew-cask" = homebrew-cask;
+	    	"deskflow/homebrew-tap" = deskflow;
+		"graytonio/homebrew-brief" = brief;
             };
           };
         }
+
+       ({config, ...}: {
+           homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+       })
       ];
     };
   };

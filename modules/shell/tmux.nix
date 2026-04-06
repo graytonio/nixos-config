@@ -16,6 +16,7 @@
     extraConfig = ''
       set -g allow-passthrough on
       set -g renumber-windows on
+      set -ga terminal-features ",*:hyperlinks"
 
       set -ga update-environment TERM
       set -ga update-environment TERM_PROGRAM
@@ -27,7 +28,7 @@
       bind "_" split-window -fv -c "#{pane_current_path}"
 
       bind -r f run-shell "tmux neww tmux-sessionizer"
-      bind -r a run-shell "tmux neww tmux-android-client"
+      bind -r s run-shell "tmux neww slack-tui"
 
       bind h select-pane -L
       bind j select-pane -D

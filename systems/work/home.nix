@@ -18,6 +18,20 @@
 	cat /dev/stdin | string collect | begin echo '```'; cat; echo '```'; end | slack-cli send $to -
       '';
       slack-send.argumentNames = "to";
+
+      slack-tui.body = ''
+	set -l SESSION_NAME "slack-tui"
+	set -l COMMAND "slack-cli tui"
+
+	tmux-session $SESSION_NAME
+
+	set -l WINDOW_IDEX 1
+	set -l WINDOW_IDEX (tmux list-windows -t $SESSION_NAME -F "#{window_index}:#{window_name}" | grep "^$WINDOW_INDEX:" | cut -d: -f2)
+
+	if not tmux list-panes -t "$SESSION_NAME:$WINDOW_NAME" -F "#{pane_title}" | grep -q "$COMMAND"
+          tmux send-keys -t "$SESSION_NAME:$WINDOW_INDEX" "$COMMAND" Enter
+        end
+      '';
     };
 
     interactiveShellInit = ''

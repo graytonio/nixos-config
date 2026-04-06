@@ -28,6 +28,7 @@
       gc = "git commit";
       gs = "git status";
       gb = "git checkout";
+      gm = "git checkout main && git pull";
 
       nixgc = "nix-env --delete-generations 1d && nix-store --gc";
     };
@@ -55,6 +56,28 @@
         end
 
         tmux switch-client -t $selected_name
+      '';
+
+      ping_alert.argumentNames = [ "host" "interval" ];
+      ping_alert.body = ''
+	if test -z "$host"
+        	echo "Usage: ping_alert <host> [interval_seconds]"
+        	echo "Example: ping_alert google.com 5"
+        	return 1
+    	end
+ 
+    	echo "⏳ Waiting for $host to respond... (checking every {$interval}s)"
+ 
+    	while true
+        	if ping -c 1 -W 1000 $host > /dev/null 2>&1
+            		osascript -e "display alert \"Server Online 🟢\" message \"$host is now reachable!\""
+            		echo "✅ $host is responding!"
+            		return 0
+        	else
+            		echo "❌ No response from $host — retrying in {$interval}s..."
+            		sleep $interval
+        	end
+    	end
       '';
 
       tmux-android-client.body = ''

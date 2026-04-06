@@ -14,16 +14,15 @@
     rsync
     rclone
     btop
-    neofetch
     unzip
     yt-dlp
     just
   ];
 
-  programs.git = {
+  programs.git.settings = {
     enable = true;
-    userName = "Grayton Ward";
-    userEmail = "graytonio.ward@gmail.com";
+    user.name = "Grayton Ward";
+    user.email = "graytonio.ward@gmail.com";
   };
 
   home.sessionVariables = {
