@@ -58,6 +58,23 @@
         tmux switch-client -t $selected_name
       '';
 
+      tmux-session-picker.body = ''
+        set -l waiting_file ~/.local/share/tmux-claude-waiting
+        set -l selected (
+          tmux list-sessions -F "#{session_name}" | while read session
+            if test -f $waiting_file && grep -qx $session $waiting_file
+              echo "● $session"
+            else
+              echo "  $session"
+            end
+          end | fzf --ansi --mouse --no-preview
+        )
+        test -z "$selected" && return 0
+        set -l session_name (string sub -s 3 $selected)
+        sed -i "" "/^$session_name\$/d" $waiting_file 2>/dev/null
+        tmux switch-client -t $session_name
+      '';
+
       ping_alert.argumentNames = [ "host" "interval" ];
       ping_alert.body = ''
 	if test -z "$host"

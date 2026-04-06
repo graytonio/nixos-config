@@ -29,6 +29,7 @@
 
       bind -r f run-shell "tmux neww tmux-sessionizer"
       bind -r s run-shell "tmux neww slack-tui"
+      bind Space display-popup -E -w 40 -h 20 "fish -c tmux-session-picker"
 
       bind h select-pane -L
       bind j select-pane -D
