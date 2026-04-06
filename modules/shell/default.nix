@@ -1,8 +1,9 @@
 { config, pkgs, ... }: {
-  imports = [ 
-    ./fish.nix 
+  imports = [
+    ./fish.nix
     ./starship.nix
     ./tmux.nix
+    ./claude-hooks.nix
   ];
 
   home.packages = with pkgs; [

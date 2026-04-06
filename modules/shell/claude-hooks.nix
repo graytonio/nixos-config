@@ -1,0 +1,47 @@
+{ pkgs, ... }:
+let
+  stopHook = pkgs.writeShellScript "claude-stop-hook" ''
+    SESSION=$(tmux display-message -p '#S' 2>/dev/null)
+    if [ -n "$SESSION" ]; then
+      mkdir -p "$HOME/.local/share"
+      grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
+        || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
+      osascript -e "display notification \"Claude is waiting\" with title \"$SESSION\""
+    fi
+  '';
+  preToolUseHook = pkgs.writeShellScript "claude-pretooluse-hook" ''
+    SESSION=$(tmux display-message -p '#S' 2>/dev/null)
+    if [ -n "$SESSION" ]; then
+      WAITING="$HOME/.local/share/tmux-claude-waiting"
+      if [ -f "$WAITING" ]; then
+        grep -v "^$SESSION$" "$WAITING" > "$WAITING.tmp" && mv "$WAITING.tmp" "$WAITING" || rm -f "$WAITING.tmp"
+      fi
+    fi
+  '';
+in {
+  home.file.".claude/settings.json".text = builtins.toJSON {
+    hooks = {
+      SessionStart = [{
+        hooks = [{
+          type = "command";
+          command = "brief inject";
+          timeout = 10;
+          statusMessage = "Loading team standards...";
+        }];
+      }];
+      Stop = [{
+        hooks = [{ type = "command"; command = "${stopHook}"; }];
+      }];
+      PreToolUse = [{
+        hooks = [{ type = "command"; command = "${preToolUseHook}"; }];
+      }];
+    };
+    enabledPlugins = {
+      "gopls-lsp@claude-plugins-official" = true;
+      "rust-analyzer-lsp@claude-plugins-official" = true;
+      "typescript-lsp@claude-plugins-official" = true;
+      "superpowers@claude-plugins-official" = true;
+    };
+    skipDangerousModePermissionPrompt = true;
+  };
+}
