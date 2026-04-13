@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
   imports = [
     ./fish.nix
     ./starship.nix
@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     which
     jq
+    terminal-notifier
     yq-go
     direnv
     dust
@@ -20,16 +21,20 @@
     just
     (writeShellScriptBin "tmux-claude-status" ''
       FILE="$HOME/.local/share/tmux-claude-waiting"
-      if [ -f "$FILE" ] && [ -s "$FILE" ]; then
+      if [ -f "$FILE" ] && grep -q '[^[:space:]]' "$FILE" 2>/dev/null; then
         echo "● claude"
       fi
     '')
   ];
 
-  programs.git.settings = {
+  programs.git = {
     enable = true;
-    user.name = "Grayton Ward";
-    user.email = "graytonio.ward@gmail.com";
+    settings = {
+      user.name = "Grayton Ward";
+      user.email = lib.mkDefault "graytonio.ward@gmail.com";
+      push.autoSetupRemote = true;
+      init.defaultBranch = "main";
+    };
   };
 
   home.sessionVariables = {

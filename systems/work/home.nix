@@ -119,6 +119,8 @@ end
     '';
   };
 
+  programs.git.settings.user.email = "grayton.ward@apollographql.com";
+
   home.stateVersion = "24.05";
   programs.home-manager.enable = true;
 }

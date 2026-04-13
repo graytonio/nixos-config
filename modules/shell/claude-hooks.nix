@@ -1,12 +1,32 @@
 { pkgs, lib, ... }:
 let
-  stopHook = pkgs.writeShellScript "claude-stop-hook" ''
+  notifyWaiting = pkgs.writeShellScript "claude-notify-waiting" ''
     SESSION=$(tmux display-message -p '#S' 2>/dev/null)
     if [ -n "$SESSION" ]; then
-      mkdir -p "$HOME/.local/share"
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
-      osascript -e "display notification \"Claude is waiting\" with title \"$SESSION\""
+      ${pkgs.terminal-notifier}/bin/terminal-notifier \
+        -message "Claude is waiting for input" \
+        -title "$SESSION" \
+        -sound Glass 2>/dev/null
+    fi
+  '';
+  stopHook = pkgs.writeShellScript "claude-stop-hook" ''
+    LOG="$HOME/.local/share/claude-hook.log"
+    mkdir -p "$HOME/.local/share"
+    echo "--- stop hook fired at $(date) ---" >> "$LOG"
+    SESSION=$(tmux display-message -p '#S' 2>/dev/null)
+    echo "SESSION=$SESSION" >> "$LOG"
+    if [ -n "$SESSION" ]; then
+      grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
+        || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
+      ${pkgs.terminal-notifier}/bin/terminal-notifier \
+        -message "Claude is waiting for input" \
+        -title "$SESSION" \
+        -sound Glass >> "$LOG" 2>&1
+      echo "terminal-notifier exit: $?" >> "$LOG"
+    else
+      echo "SESSION empty, skipping notification" >> "$LOG"
     fi
   '';
   preToolUseHook = pkgs.writeShellScript "claude-pretooluse-hook" ''
@@ -33,6 +53,9 @@ in {
         }];
         Stop = [{
           hooks = [{ type = "command"; command = "${stopHook}"; }];
+        }];
+        PermissionRequest = [{
+          hooks = [{ type = "command"; command = "${notifyWaiting}"; async = true; }];
         }];
         PreToolUse = [{
           hooks = [{ type = "command"; command = "${preToolUseHook}"; }];

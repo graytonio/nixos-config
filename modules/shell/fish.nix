@@ -60,20 +60,62 @@
 
       tmux-session-picker.body = ''
         set -l waiting_file ~/.local/share/tmux-claude-waiting
+
+        # Build pane PID -> session mapping
+        set -l pane_pids (tmux list-panes -a -F "#{pane_pid}" 2>/dev/null)
+        set -l pane_sessions_list (tmux list-panes -a -F "#{session_name}" 2>/dev/null)
+
+        # Find sessions that have Claude Code running in any pane by walking
+        # each claude process's parent chain until we hit a pane PID
+        set -l claude_sessions
+        for claude_pid in (pgrep -x claude 2>/dev/null)
+          set -l pid $claude_pid
+          for _i in (seq 20)
+            set -l found_idx 0
+            for i in (seq (count $pane_pids))
+              if test "$pane_pids[$i]" = "$pid"
+                set found_idx $i
+                break
+              end
+            end
+            if test $found_idx -gt 0
+              set -l session $pane_sessions_list[$found_idx]
+              if not contains -- $session $claude_sessions
+                set -a claude_sessions $session
+              end
+              break
+            end
+            set pid (ps -p $pid -o ppid= 2>/dev/null | string trim)
+            if test -z "$pid" || test "$pid" = "0" || test "$pid" = "1"
+              break
+            end
+          end
+        end
+
+        if test (count $claude_sessions) -eq 0
+          echo "No sessions with Claude Code running"
+          sleep 1
+          return 0
+        end
+
         set -l selected (
-          tmux list-sessions -F "#{session_name}" | while read session
+          for session in $claude_sessions
             if test -f $waiting_file && grep -qx "$session" $waiting_file
               echo "● $session"
             else
               echo "  $session"
             end
-          end | fzf --ansi --mouse --no-preview
+          end | fzf --ansi --no-preview
         )
         test -z "$selected" && return 0
         set -l session_name (string sub -s 3 $selected)
         if test -f $waiting_file
           set -l lines (grep -v "^$session_name\$" $waiting_file 2>/dev/null)
-          printf "%s\n" $lines > $waiting_file
+          if test (count $lines) -gt 0
+            printf "%s\n" $lines > $waiting_file
+          else
+            rm -f $waiting_file
+          end
         end
         tmux switch-client -t $session_name
       '';
