@@ -35,7 +35,8 @@ let
       ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
-        -sound Glass >> "$LOG" 2>&1
+        -sound Glass \
+        -execute "${clickHandler} \"$SESSION\"" >> "$LOG" 2>&1
       echo "terminal-notifier exit: $?" >> "$LOG"
     else
       echo "SESSION empty, skipping notification" >> "$LOG"
