@@ -1,5 +1,16 @@
 { pkgs, lib, ... }:
 let
+  clickHandler = pkgs.writeShellScript "claude-notification-click" ''
+    SESSION="$1"
+    if [ -z "$SESSION" ]; then
+      exit 0
+    fi
+    CLIENT=$(tmux list-clients -F "#{client_activity} #{client_name}" 2>/dev/null \
+      | sort -rn | head -1 | awk '{print $2}')
+    if [ -n "$CLIENT" ]; then
+      tmux switch-client -c "$CLIENT" -t "$SESSION"
+    fi
+  '';
   notifyWaiting = pkgs.writeShellScript "claude-notify-waiting" ''
     SESSION=$(tmux display-message -p '#S' 2>/dev/null)
     if [ -n "$SESSION" ]; then
