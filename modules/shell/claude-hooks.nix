@@ -19,7 +19,8 @@ let
       ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
-        -sound Glass 2>/dev/null
+        -sound Glass \
+        -execute "${clickHandler} \"$SESSION\"" 2>/dev/null
     fi
   '';
   stopHook = pkgs.writeShellScript "claude-stop-hook" ''
