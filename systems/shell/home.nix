@@ -3,7 +3,7 @@
   home.homeDirectory = "/home/graytonio";
 
   imports = [
-    ../../modules/shell
+    ../../modules/base
   ];
 
   home.stateVersion = "25.05";

@@ -4,6 +4,8 @@
     ./starship.nix
     ./tmux.nix
     ./claude-hooks.nix
+    ./nvim
+    ./yazi
   ];
 
   home.packages = with pkgs; [

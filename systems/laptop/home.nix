@@ -2,14 +2,11 @@
   home.username = "graytonio";
   home.homeDirectory = "/home/graytonio";
 
-  imports =
-    [ 
-      ../../modules/shell 
-      ../../modules/programs 
-      ../../modules/gui 
-      ../../modules/programming 
-      ../../modules/wm/hyprland
-    ];
+  imports = [
+    ../../modules/base
+    ../../modules/dev
+    ../../modules/desktop
+  ];
 
   hyprlandMonitors = [
     "eDP-1,preferred,0x0,2"

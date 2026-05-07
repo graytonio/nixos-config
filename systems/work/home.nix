@@ -1,7 +1,6 @@
 {config, pkgs, ...}: {
   imports = [
-    ../../modules/shell
-    ../../modules/programs/nvim
+    ../../modules/base
   ];
 
   home.packages = [
