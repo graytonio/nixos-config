@@ -1,9 +1,5 @@
 { pkgs, lib, ... }:
 let
-  notifyCmd =
-    if pkgs.stdenv.isDarwin
-    then "${pkgs.terminal-notifier}/bin/terminal-notifier"
-    else "";
   clickHandler = pkgs.writeShellScript "claude-notification-click" ''
     SESSION="$1"
     if [ -z "$SESSION" ]; then
@@ -21,7 +17,7 @@ let
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
   '' + lib.optionalString pkgs.stdenv.isDarwin ''
-      ${notifyCmd} \
+      ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
         -sound Glass \
@@ -39,7 +35,7 @@ let
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
   '' + lib.optionalString pkgs.stdenv.isDarwin ''
-      ${notifyCmd} \
+      ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
         -sound Glass \
