@@ -26,7 +26,8 @@ For non-NixOS hosts where you only want user-level configuration.
 ```bash
 nix run home-manager/master -- switch --flake .#shell-linux    # on Linux
 nix run home-manager/master -- switch --flake .#shell-darwin   # on Mac
-home-manager switch --flake .#shell-linux                      # subsequent rebuilds
+home-manager switch --flake .#shell-linux                      # subsequent rebuilds (Linux)
+home-manager switch --flake .#shell-darwin                     # subsequent rebuilds (Mac)
 ```
 
 ### `nixos` — full NixOS host
