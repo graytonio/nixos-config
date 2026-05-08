@@ -113,6 +113,37 @@
       ];
     };
 
+    darwinConfigurations.darwin = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./systems/darwin/configuration.nix
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.graytonw = import ./systems/darwin/home.nix;
+        }
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            enable = true;
+            enableRosetta = true;
+            user = "graytonw";
+            mutableTaps = false;
+            taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+            };
+          };
+        }
+        ({config, ...}: {
+            homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+        })
+      ];
+    };
+
     darwinConfigurations.work = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
