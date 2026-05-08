@@ -51,7 +51,6 @@
 
   outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, deskflow, brief, ... }@inputs:
   let
-    pkgs = nixpkgs.legacyPackages.x86_64-linux;
     mkHome = system: module: home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = { inherit inputs; };
@@ -60,48 +59,9 @@
   in
   {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
-    homeConfigurations."graytonio" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        ./systems/shell/home.nix
-      ];
-    };
 
     homeConfigurations."shell-linux"  = mkHome "x86_64-linux"   ./systems/shell/home.nix;
     homeConfigurations."shell-darwin" = mkHome "aarch64-darwin" ./systems/shell/home.nix;
-
-    nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      system = "x86_64-linux";
-      modules = [
-        ./systems/laptop/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.graytonio = import ./systems/laptop/home.nix;
-        }
-      ];
-    };
-
-    nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      system = "x86_64-linux";
-      modules = [
-        ./systems/desktop/configuration.nix
-        nur.modules.nixos.default
-        hyprland.nixosModules.default
-        {nixpkgs.overlays = [hyprpanel.overlay];}
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.graytonio = import ./systems/desktop/home.nix;
-        }
-      ];
-    };
 
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
