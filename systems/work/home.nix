@@ -1,17 +1,13 @@
-{config, pkgs, ...}: {
-  imports = [
-    ../../modules/shell
-    ../../modules/programs/nvim
-  ];
+{config, pkgs, lib, ...}: {
+  imports = [ ../darwin/home.nix ];
 
-  home.packages = [
-    pkgs.mise
-  ];
+  home.packages = [ pkgs.mise ];
+
+  programs.git.settings.user.email = "grayton.ward@apollographql.com";
 
   programs.fish = {
-    shellAliases = {
-      nixup = "sudo darwin-rebuild switch --flake ~/repos/nixos-config/#work";
-    };
+    shellAliases.nixup = lib.mkForce
+      "darwin-rebuild switch --flake ~/repos/nixos-config/#work";
 
     functions = {
       slack-send.body = ''
@@ -113,14 +109,9 @@ end
 
   programs.tmux = {
     extraConfig = ''
-      bind C-q run-shell "fish -c 'tmux-session /Users/graytonw/repos/monorepo'" 
-      bind C-w run-shell "fish -c 'tmux-session /Users/graytonw/repos/apollo-argo'" 
-      bind C-e run-shell "fish -c 'tmux-session /Users/graytonw/repos/scratch'" 
+      bind C-q run-shell "fish -c 'tmux-session /Users/graytonw/repos/monorepo'"
+      bind C-w run-shell "fish -c 'tmux-session /Users/graytonw/repos/apollo-argo'"
+      bind C-e run-shell "fish -c 'tmux-session /Users/graytonw/repos/scratch'"
     '';
   };
-
-  programs.git.settings.user.email = "grayton.ward@apollographql.com";
-
-  home.stateVersion = "24.05";
-  programs.home-manager.enable = true;
 }

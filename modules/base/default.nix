@@ -4,12 +4,13 @@
     ./starship.nix
     ./tmux.nix
     ./claude-hooks.nix
+    ./nvim
+    ./yazi
   ];
 
   home.packages = with pkgs; [
     which
     jq
-    terminal-notifier
     yq-go
     direnv
     dust
@@ -25,6 +26,8 @@
         echo "● claude"
       fi
     '')
+  ] ++ lib.optionals stdenv.isDarwin [
+    terminal-notifier
   ];
 
   programs.git = {

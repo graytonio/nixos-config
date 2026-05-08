@@ -11,19 +11,21 @@ let
       tmux switch-client -c "$CLIENT" -t "$SESSION"
     fi
   '';
-  notifyWaiting = pkgs.writeShellScript "claude-notify-waiting" ''
+  notifyWaiting = pkgs.writeShellScript "claude-notify-waiting" (''
     SESSION=$(tmux display-message -p '#S' 2>/dev/null)
     if [ -n "$SESSION" ]; then
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
+  '' + lib.optionalString pkgs.stdenv.isDarwin ''
       ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
         -sound Glass \
         -execute "${clickHandler} \"$SESSION\"" 2>/dev/null
+  '' + ''
     fi
-  '';
-  stopHook = pkgs.writeShellScript "claude-stop-hook" ''
+  '');
+  stopHook = pkgs.writeShellScript "claude-stop-hook" (''
     LOG="$HOME/.local/share/claude-hook.log"
     mkdir -p "$HOME/.local/share"
     echo "--- stop hook fired at $(date) ---" >> "$LOG"
@@ -32,16 +34,18 @@ let
     if [ -n "$SESSION" ]; then
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
+  '' + lib.optionalString pkgs.stdenv.isDarwin ''
       ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
         -sound Glass \
         -execute "${clickHandler} \"$SESSION\"" >> "$LOG" 2>&1
       echo "terminal-notifier exit: $?" >> "$LOG"
+  '' + ''
     else
       echo "SESSION empty, skipping notification" >> "$LOG"
     fi
-  '';
+  '');
   preToolUseHook = pkgs.writeShellScript "claude-pretooluse-hook" ''
     SESSION=$(tmux display-message -p '#S' 2>/dev/null)
     if [ -n "$SESSION" ]; then

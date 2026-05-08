@@ -4,69 +4,57 @@ This repository contains my Nix-based system configurations and modules for NixO
 
 ## Repository Structure
 
-- `modules/`: Reusable modules that can be imported by different systems
-  - `shell/`: Shell-related configurations (zsh, fish, etc.)
-  - `programming/`: Development tools and programming environments
-  - `gaming/`: Gaming-related configurations and tools
-  - `programs/`: General program configurations
-  - `gui/`: Graphical user interface configurations
-  - `wm/`: Window manager configurations
+- `modules/`: Reusable home-manager modules organized by tier
+  - `base/`: Always-on shell, editor, and CLI tools (every config imports this)
+  - `dev/`: Programming languages and dev tooling
+  - `apps/`: Cross-platform GUI apps (ghostty, firefox)
+  - `desktop/`: Linux-only desktop environment (Hyprland, Linux GUI apps)
+  - `gaming/`: NixOS-only gaming tooling
 
-- `systems/`: System-specific configurations for different machines
-  - `desktop/`: NixOS desktop configuration
-  - `laptop/`: NixOS personal laptop configuration
-  - `work/`: macOS (nix-darwin) work laptop configuration
-  - `shell/`: Standalone home-manager configuration for non-NixOS Linux/macOS hosts
+- `systems/`: System-specific configurations
+  - `shell/`: Portable home-manager for any non-NixOS Linux or Mac host
+  - `nixos/`: Full NixOS host (Hyprland desktop)
+  - `darwin/`: Generic nix-darwin baseline (shell + homebrew skeleton)
+  - `work/`: Apollo work Mac (extends `darwin/` with work-specific overrides)
 
-## Getting Started
+## The Four Configurations
 
-### NixOS
+### `shell` — portable home-manager (Linux + Mac)
 
-1. Clone this repository
-2. Install Nix with Flakes support
-3. Build and switch to the desired configuration:
-   ```bash
-   sudo nixos-rebuild switch --flake .#<system-name>
-   ```
-   Available systems: `desktop`, `laptop`.
+For non-NixOS hosts where you only want user-level configuration.
 
-### macOS (nix-darwin)
+```bash
+nix run home-manager/master -- switch --flake .#shell-linux    # on Linux
+nix run home-manager/master -- switch --flake .#shell-darwin   # on Mac
+home-manager switch --flake .#shell-linux                      # subsequent rebuilds (Linux)
+home-manager switch --flake .#shell-darwin                     # subsequent rebuilds (Mac)
+```
 
-1. Install Nix using the [Determinate Systems installer](https://github.com/DeterminateSystems/nix-installer) or the official installer (Flakes support required).
-2. Bootstrap nix-darwin:
-   ```bash
-   nix run nix-darwin -- switch --flake .#work
-   ```
-3. Subsequent rebuilds:
-   ```bash
-   darwin-rebuild switch --flake .#work
-   ```
-   The `work` configuration manages Homebrew taps via `nix-homebrew`, so no separate Homebrew install is required.
+### `nixos` — full NixOS host
 
-### Other Linux / macOS (standalone home-manager)
+```bash
+sudo nixos-rebuild switch --flake .#nixos
+```
 
-For non-NixOS hosts where you only want user-level configuration (no system management):
+### `darwin` — generic Mac with homebrew baseline
 
-1. Install Nix with Flakes support.
-2. Apply the home-manager configuration:
-   ```bash
-   nix run home-manager/master -- switch --flake .#graytonio
-   ```
-3. Subsequent rebuilds (once `home-manager` is on PATH):
-   ```bash
-   home-manager switch --flake .#graytonio
-   ```
+```bash
+nix run nix-darwin -- switch --flake .#darwin    # bootstrap
+darwin-rebuild switch --flake .#darwin           # subsequent rebuilds
+```
+
+### `work` — Apollo work Mac (extends `darwin`)
+
+```bash
+darwin-rebuild switch --flake .#work
+```
 
 ## Requirements
 
 - Nix with Flakes support (`experimental-features = nix-command flakes`)
-- For NixOS / nix-darwin: root or sudo access for system-wide rebuilds
-- For standalone home-manager: no root required
-
-## Contributing
-
-Feel free to use this configuration as a reference for your own NixOS setup. If you find any issues or have suggestions, please open an issue or submit a pull request.
+- For `nixos`/`darwin`/`work`: root or sudo for system-wide rebuilds
+- For `shell`: no root required
 
 ## License
 
-This configuration is licensed under the MIT License. See the LICENSE file for details. 
+MIT.

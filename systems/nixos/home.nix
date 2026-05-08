@@ -2,22 +2,15 @@
   home.username = "graytonio";
   home.homeDirectory = "/home/graytonio";
 
-  imports =
-    [ 
-      ../../modules/shell 
-      ../../modules/programs/nvim
-      ../../modules/programs/yazi
-      ../../modules/gui/media
-      ../../modules/gui/kitty
-      ../../modules/gui/spotify
-      ../../modules/gui/discord
-      ../../modules/gui/obsidian
-      ../../modules/programming 
-      ../../modules/programming/spacetimedb.nix
-      ../../modules/gaming
-      ../../modules/gaming/obs.nix
-      ../../modules/wm/hyprland
-    ];
+  imports = [
+    ../../modules/base
+    ../../modules/dev
+    ../../modules/dev/spacetimedb.nix
+    ../../modules/apps
+    ../../modules/desktop
+    ../../modules/gaming
+    ../../modules/gaming/obs.nix
+  ];
 
   xresources.properties = {
     "Xcursor.size" = 16;
@@ -34,10 +27,9 @@
     "DP-2,preferred,-1440x-480,1,transform,1"
   ];
 
-  
   programs.fish = {
     shellAliases = {
-      nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#desktop";
+      nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#nixos";
     };
   };
 

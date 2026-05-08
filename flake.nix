@@ -49,39 +49,26 @@
     };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, deskflow, brief, ... }@inputs: 
+  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, deskflow, brief, ... }@inputs:
   let
-    pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    mkHome = system: module: home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.${system};
+      extraSpecialArgs = { inherit inputs; };
+      modules = [ module ];
+    };
   in
   {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
-    homeConfigurations."graytonio" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      modules = [
-        ./systems/shell/home.nix
-      ];
-    };
-    
-    nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-      specialArgs = { inherit inputs; };
-      system = "x86_64-linux";
-      modules = [
-        ./systems/laptop/configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.graytonio = import ./systems/laptop/home.nix;
-        }
-      ];
-    };
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
 
-    nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
+    homeConfigurations."shell-linux"  = mkHome "x86_64-linux"   ./systems/shell/home.nix;
+    homeConfigurations."shell-darwin" = mkHome "aarch64-darwin" ./systems/shell/home.nix;
+
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";
       modules = [
-        ./systems/desktop/configuration.nix
+        ./systems/nixos/configuration.nix
         nur.modules.nixos.default
         hyprland.nixosModules.default
         {nixpkgs.overlays = [hyprpanel.overlay];}
@@ -90,15 +77,47 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.graytonio = import ./systems/desktop/home.nix;
+          home-manager.users.graytonio = import ./systems/nixos/home.nix;
         }
+      ];
+    };
+
+    darwinConfigurations.darwin = nix-darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      specialArgs = { inherit inputs; };
+      modules = [
+        ./systems/darwin/configuration.nix
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.graytonw = import ./systems/darwin/home.nix;
+        }
+        nix-homebrew.darwinModules.nix-homebrew
+        {
+          nix-homebrew = {
+            enable = true;
+            enableRosetta = true;
+            user = "graytonw";
+            mutableTaps = false;
+            taps = {
+                "homebrew/homebrew-core" = homebrew-core;
+                "homebrew/homebrew-cask" = homebrew-cask;
+            };
+          };
+        }
+        ({config, ...}: {
+            homebrew.taps = builtins.attrNames config.nix-homebrew.taps;
+        })
       ];
     };
 
     darwinConfigurations.work = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
+      specialArgs = { inherit inputs; };
       modules = [
-        ./systems/work/configuration.nix
+        ./systems/darwin/configuration.nix
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
