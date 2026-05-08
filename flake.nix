@@ -49,9 +49,14 @@
     };
   };
 
-  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, deskflow, brief, ... }@inputs: 
+  outputs = { nixpkgs, nix-darwin, home-manager, hyprland, hyprpanel, nur, nix-homebrew, homebrew-core, homebrew-cask, deskflow, brief, ... }@inputs:
   let
     pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    mkHome = system: module: home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.${system};
+      extraSpecialArgs = { inherit inputs; };
+      modules = [ module ];
+    };
   in
   {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
@@ -61,7 +66,10 @@
         ./systems/shell/home.nix
       ];
     };
-    
+
+    homeConfigurations."shell-linux"  = mkHome "x86_64-linux"   ./systems/shell/home.nix;
+    homeConfigurations."shell-darwin" = mkHome "aarch64-darwin" ./systems/shell/home.nix;
+
     nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";

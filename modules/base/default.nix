@@ -11,7 +11,6 @@
   home.packages = with pkgs; [
     which
     jq
-    terminal-notifier
     yq-go
     direnv
     dust
@@ -27,6 +26,8 @@
         echo "● claude"
       fi
     '')
+  ] ++ lib.optionals stdenv.isDarwin [
+    terminal-notifier
   ];
 
   programs.git = {
