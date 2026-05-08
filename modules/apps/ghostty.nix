@@ -1,6 +1,6 @@
 { pkgs, lib, ... }: {
-  programs.ghostty = {
-    enable = pkgs.stdenv.isLinux;
-    enableFishIntegration = pkgs.stdenv.isLinux;
+  programs.ghostty = lib.mkIf pkgs.stdenv.isLinux {
+    enable = true;
+    enableFishIntegration = true;
   };
 }
