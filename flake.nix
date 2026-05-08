@@ -59,6 +59,7 @@
   in
   {
     formatter.x86_64-linux = nixpkgs.legacyPackages.x86_64-linux.nixfmt;
+    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt;
 
     homeConfigurations."shell-linux"  = mkHome "x86_64-linux"   ./systems/shell/home.nix;
     homeConfigurations."shell-darwin" = mkHome "aarch64-darwin" ./systems/shell/home.nix;
@@ -114,6 +115,7 @@
 
     darwinConfigurations.work = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
+      specialArgs = { inherit inputs; };
       modules = [
         ./systems/darwin/configuration.nix
         home-manager.darwinModules.home-manager
