@@ -95,6 +95,24 @@
       ];
     };
 
+    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs; };
+      system = "x86_64-linux";
+      modules = [
+        ./systems/nixos/configuration.nix
+        nur.modules.nixos.default
+        hyprland.nixosModules.default
+        {nixpkgs.overlays = [hyprpanel.overlay];}
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit inputs; };
+          home-manager.users.graytonio = import ./systems/nixos/home.nix;
+        }
+      ];
+    };
+
     darwinConfigurations.work = nix-darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
