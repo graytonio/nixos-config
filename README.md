@@ -17,6 +17,28 @@ This repository contains my Nix-based system configurations and modules for NixO
   - `darwin/`: Generic nix-darwin baseline (shell + homebrew skeleton)
   - `work/`: Apollo work Mac (extends `darwin/` with work-specific overrides)
 
+## Prerequisites
+
+1. Install Nix if it isn't already present:
+
+   ```bash
+   sh <(curl -L https://nixos.org/nix/install) --daemon
+   ```
+
+2. Enable Flakes support (not on by default):
+
+   ```bash
+   mkdir -p ~/.config/nix
+   echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+   ```
+
+3. Clone this repo and `cd` into it — the commands below assume you're running them from inside the checkout:
+
+   ```bash
+   git clone git@github.com:graytonio/nixos-config.git
+   cd nixos-config
+   ```
+
 ## The Four Configurations
 
 ### `shell` — portable home-manager (Linux + Mac)
@@ -24,11 +46,13 @@ This repository contains my Nix-based system configurations and modules for NixO
 For non-NixOS hosts where you only want user-level configuration.
 
 ```bash
-nix run home-manager/master -- switch --flake .#shell-linux    # on Linux
-nix run home-manager/master -- switch --flake .#shell-darwin   # on Mac
-home-manager switch --flake .#shell-linux                      # subsequent rebuilds (Linux)
-home-manager switch --flake .#shell-darwin                     # subsequent rebuilds (Mac)
+nix run home-manager/master -- switch --flake .#shell-linux --impure    # on Linux
+nix run home-manager/master -- switch --flake .#shell-darwin           # on Mac
+home-manager switch --flake .#shell-linux --impure                     # subsequent rebuilds (Linux)
+home-manager switch --flake .#shell-darwin                              # subsequent rebuilds (Mac)
 ```
+
+`shell-linux` picks up your username/home directory from the environment at build time, so it needs `--impure`.
 
 ### `nixos` — full NixOS host
 
