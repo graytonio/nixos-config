@@ -4,7 +4,7 @@
   ];
 
   home.packages = with pkgs; [
-    wineWowPackages.waylandFull
+    wineWow64Packages.waylandFull
     winetricks
     prismlauncher
     samrewritten

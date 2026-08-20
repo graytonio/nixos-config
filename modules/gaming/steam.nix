@@ -3,7 +3,7 @@
   home.packages = [
     pkgs.lutris
     pkgs.mangohud
-    pkgs.protonup
+    pkgs.protonup-ng
     pkgs.gamescope
     pkgs.xivlauncher
   ];
