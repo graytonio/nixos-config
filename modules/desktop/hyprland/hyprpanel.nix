@@ -1,11 +1,8 @@
-{ inputs, ...}:
+{ inputs, pkgs, ... }:
 {
-  imports = [ inputs.hyprpanel.homeManagerModules.hyprpanel ];  
-
   programs.hyprpanel = {
     enable = true;
-    overlay.enable = true;
-    overwrite.enable = true;
+    package = inputs.hyprpanel.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
     settings.layout = {
       "bar.layouts" = {

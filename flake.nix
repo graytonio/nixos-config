@@ -71,7 +71,6 @@
         ./systems/nixos/configuration.nix
         nur.modules.nixos.default
         hyprland.nixosModules.default
-        {nixpkgs.overlays = [hyprpanel.overlay];}
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
