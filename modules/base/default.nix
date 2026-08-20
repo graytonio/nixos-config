@@ -26,7 +26,7 @@
         echo "● claude"
       fi
     '')
-  ] ++ lib.optionals stdenv.isDarwin [
+  ] ++ lib.optionals stdenv.hostPlatform.isDarwin [
     terminal-notifier
   ];
 

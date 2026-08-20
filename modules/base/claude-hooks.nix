@@ -16,7 +16,7 @@ let
     if [ -n "$SESSION" ]; then
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
-  '' + lib.optionalString pkgs.stdenv.isDarwin ''
+  '' + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
       ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \
@@ -34,7 +34,7 @@ let
     if [ -n "$SESSION" ]; then
       grep -qxF "$SESSION" "$HOME/.local/share/tmux-claude-waiting" 2>/dev/null \
         || echo "$SESSION" >> "$HOME/.local/share/tmux-claude-waiting"
-  '' + lib.optionalString pkgs.stdenv.isDarwin ''
+  '' + lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
       ${pkgs.terminal-notifier}/bin/terminal-notifier \
         -message "Claude is waiting for input" \
         -title "$SESSION" \

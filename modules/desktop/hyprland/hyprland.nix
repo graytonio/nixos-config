@@ -29,6 +29,7 @@
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
+      configType = "hyprlang";
       settings = {
 	# Variables
         "$mod" = "SUPER";

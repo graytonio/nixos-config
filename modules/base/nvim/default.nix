@@ -5,6 +5,7 @@
     enable = true;
     defaultEditor = true;
     vimAlias = true;
+    nixpkgs.pkgs = pkgs;
 
     #colorschemes.dracula.enable = true;
     colorschemes.catppuccin = {

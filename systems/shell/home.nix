@@ -4,11 +4,11 @@ let
   envHome = builtins.getEnv "HOME";
 in {
   home.username =
-    if pkgs.stdenv.isDarwin then "graytonw"
+    if pkgs.stdenv.hostPlatform.isDarwin then "graytonw"
     else if envUser != "" then envUser
     else throw "Could not read $USER — run home-manager with --impure";
   home.homeDirectory =
-    if pkgs.stdenv.isDarwin then "/Users/graytonw"
+    if pkgs.stdenv.hostPlatform.isDarwin then "/Users/graytonw"
     else if envHome != "" then envHome
     else throw "Could not read $HOME — run home-manager with --impure";
 
@@ -21,11 +21,11 @@ in {
   ];
 
   programs.fish.shellAliases.nixup =
-    if pkgs.stdenv.isDarwin
+    if pkgs.stdenv.hostPlatform.isDarwin
     then "home-manager switch --flake ~/repos/nixos-config/#shell-darwin"
     else "home-manager switch --flake ~/repos/nixos-config/#shell-linux --impure";
   programs.fish.shellAliases.nixupdate =
-    if pkgs.stdenv.isDarwin
+    if pkgs.stdenv.hostPlatform.isDarwin
     then "nix flake update --flake ~/repos/nixos-config"
     else "nix flake update --flake ~/repos/nixos-config";
 

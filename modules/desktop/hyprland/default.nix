@@ -7,7 +7,7 @@
   ];
   home.packages = with pkgs; [ 
     # Wallpaper Daemon
-    inputs.swww.packages.${pkgs.system}.swww
+    inputs.swww.packages.${pkgs.stdenv.hostPlatform.system}.swww
 
     # Screenshots
     grim
