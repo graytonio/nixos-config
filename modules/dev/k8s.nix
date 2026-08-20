@@ -1,6 +1,6 @@
-{pkgs, ...}: {
+{pkgs, lib, ...}: {
   home.packages = with pkgs; [
-    kubectl
+    (lib.hiPrio kubectl)
     k9s
     kubernetes-helm
     kustomize
