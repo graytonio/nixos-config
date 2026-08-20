@@ -60,14 +60,6 @@ in {
     mkdir -p "$HOME/.claude"
     cp ${pkgs.writeText "claude-settings.json" (builtins.toJSON {
       hooks = {
-        SessionStart = [{
-          hooks = [{
-            type = "command";
-            command = "brief inject";
-            timeout = 10;
-            statusMessage = "Loading team standards...";
-          }];
-        }];
         Stop = [{
           hooks = [{ type = "command"; command = "${stopHook}"; }];
         }];
