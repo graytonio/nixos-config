@@ -10,6 +10,7 @@
 
   programs.fish.shellAliases = {
     nixup = "darwin-rebuild switch --flake ~/repos/nixos-config/#darwin";
+    nixupdate = "nix flake update --flake ~/repos/nixos-config";
   };
 
   home.stateVersion = "24.05";

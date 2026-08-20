@@ -30,6 +30,7 @@
   programs.fish = {
     shellAliases = {
       nixup = "sudo nixos-rebuild switch --flake ~/nixos-config/#nixos";
+      nixupdate = "nix flake update --flake ~/nixos-config";
     };
   };
 
