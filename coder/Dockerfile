@@ -6,7 +6,7 @@ RUN mkdir -p /etc/nix && \
 ENV USER=coder
 ENV HOME=/home/coder
 ENV PATH="/home/coder/.nix-profile/bin:${PATH}"
-RUN mkdir -p "$HOME"
+RUN mkdir -p "$HOME" "$HOME/.local/state/nix/profiles"
 
 WORKDIR /flake
 COPY . .
