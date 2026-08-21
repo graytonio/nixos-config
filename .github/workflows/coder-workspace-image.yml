@@ -6,9 +6,12 @@ on:
     paths:
       - flake.nix
       - flake.lock
-      - modules/**
+      - modules/base/**
+      - modules/dev/**
+      - modules/apps/**
       - systems/shell/**
       - coder/Dockerfile
+      - .dockerignore
 
 jobs:
   build:
