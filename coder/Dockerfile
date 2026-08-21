@@ -22,4 +22,16 @@ COPY . .
 
 RUN nix run --impure /flake#homeConfigurations.shell-linux.activationPackage
 
+# home-manager's programs.fish.enable makes fish available and configures it,
+# but standalone home-manager (no full NixOS) can't write /etc/passwd -- that
+# stays whatever the base image shipped (bash) unless set explicitly here.
+# Confirmed empirically: a real workspace's `coder ssh` / web terminal landed
+# in bash even with fish fully installed and configured. awk (not chsh/usermod,
+# which this minimal image may not have) rewrites just the shell field on the
+# root passwd entry.
+RUN FISH_BIN="/home/coder/.nix-profile/bin/fish" && \
+    grep -qxF "$FISH_BIN" /etc/shells 2>/dev/null || echo "$FISH_BIN" >> /etc/shells && \
+    awk -v shell="$FISH_BIN" 'BEGIN{FS=OFS=":"} $1=="root"{$7=shell} {print}' /etc/passwd > /etc/passwd.new && \
+    mv /etc/passwd.new /etc/passwd
+
 WORKDIR $HOME
