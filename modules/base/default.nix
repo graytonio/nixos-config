@@ -4,6 +4,7 @@
     ./starship.nix
     ./tmux.nix
     ./claude-hooks.nix
+    ./posix-tools.nix
     ./nvim
     ./yazi
   ];
