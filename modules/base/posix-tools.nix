@@ -28,7 +28,24 @@
   home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux (with pkgs; [
     gnused
     gawk
-    ncurses
+    # lowPrio because ncurses and Ghostty (modules/apps, pulled in by
+    # shell-linux) both ship share/terminfo/g/ghostty, and home.packages is a
+    # single buildEnv -- an unprioritised collision is a hard build failure:
+    #
+    #   pkgs.buildEnv error: two given paths contain a conflicting subpath:
+    #     .../ncurses-6.6/share/terminfo/g/ghostty  and
+    #     .../ghostty-1.3.1/share/terminfo/g/ghostty
+    #
+    # Priority makes Ghostty win that one file, which is the right outcome --
+    # its own terminfo is authoritative for it. Verified that everything this
+    # package is here for survives the demotion: clear, tput, infocmp, reset
+    # and tic all still resolve to ncurses, as does the general terminfo
+    # database (xterm-256color, screen, vt100).
+    #
+    # Note `nix eval` cannot catch this class of error -- collisions only
+    # surface when the buildEnv is actually realised, which is why it reached
+    # CI. Build home.path, don't just evaluate it, when touching this list.
+    (lib.lowPrio ncurses)
     diffutils
     gnupatch
     procps
