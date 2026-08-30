@@ -64,6 +64,10 @@
     homeConfigurations."shell-linux"  = mkHome "x86_64-linux"   ./systems/shell/home.nix;
     homeConfigurations."shell-darwin" = mkHome "aarch64-darwin" ./systems/shell/home.nix;
 
+    # Headless: the Coder workspace container. No GUI applications, and no
+    # builtins.getEnv, so coder/Dockerfile activates it without --impure.
+    homeConfigurations."headless-linux" = mkHome "x86_64-linux" ./systems/headless/home.nix;
+
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";

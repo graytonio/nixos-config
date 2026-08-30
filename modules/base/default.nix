@@ -1,5 +1,6 @@
 { config, pkgs, lib, ... }: {
   imports = [
+    ../profiles.nix
     ./fish.nix
     ./starship.nix
     ./tmux.nix

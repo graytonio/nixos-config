@@ -6,10 +6,14 @@ on:
     paths:
       - flake.nix
       - flake.lock
-      - modules/base/**
-      - modules/dev/**
-      - modules/apps/**
-      - systems/shell/**
+      # modules/** rather than enumerating base/dev/apps: modules/profiles.nix
+      # sits at the modules root and the old list would have missed it. A
+      # *missed* rebuild is far worse than a spurious one -- it ships an image
+      # that silently disagrees with the flake -- so over-trigger on purpose.
+      - modules/**
+      # systems/headless/**, not systems/shell/**: the image builds the headless
+      # profile now, so shell-profile changes no longer affect it.
+      - systems/headless/**
       - coder/Dockerfile
       - .dockerignore
 
