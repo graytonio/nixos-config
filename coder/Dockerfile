@@ -30,7 +30,20 @@ COPY . .
 # directory, where systems/shell/home.nix reads them from $USER/$HOME via
 # builtins.getEnv. The ENV lines above still matter at container runtime, they
 # are just no longer an input to the build.
-RUN nix run /flake#homeConfigurations.headless-linux.activationPackage
+#
+# Built to a stable out-link rather than `nix run` because the path is needed
+# again at *runtime*. The workspace home directory is a PVC that is seeded from
+# this image exactly once, on first boot; it is never re-seeded. So the
+# home-manager dotfile symlinks it captures freeze pointing at whichever
+# home-manager-files store path the seeding image had, and every later image
+# rebuild changes that hash and leaves them dangling -- fish, starship, tmux and
+# nvim all silently lose their config while still starting normally. Confirmed
+# empirically: ~/.config/fish/config.fish pointed at a store path absent from
+# the running image. coder-templates/nix-dev/main.tf re-runs
+# /hm-activation/activate on every workspace start to re-point them (~500ms,
+# idempotent); this out-link is the stable path it looks for.
+RUN nix build --out-link /hm-activation /flake#homeConfigurations.headless-linux.activationPackage \
+    && /hm-activation/activate
 
 # home-manager's programs.fish.enable makes fish available and configures it,
 # but standalone home-manager (no full NixOS) can't write /etc/passwd -- that
