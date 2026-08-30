@@ -20,7 +20,17 @@ RUN printf 'NAME="NixOS Container"\nID=nixos\nVERSION_ID="unstable"\nPRETTY_NAME
 WORKDIR /flake
 COPY . .
 
-RUN nix run --impure /flake#homeConfigurations.shell-linux.activationPackage
+# headless-linux, not shell-linux: no GUI applications (Ghostty, Firefox, VS
+# Code) that a container can never display. Measured against this flake's own
+# nixpkgs pin, that takes the profile closure from 8.94 GB to 6.59 GB. It also
+# removes the ncurses/Ghostty terminfo collision documented in
+# modules/base/posix-tools.nix from this image entirely.
+#
+# No --impure needed: systems/headless/home.nix hardcodes username and home
+# directory, where systems/shell/home.nix reads them from $USER/$HOME via
+# builtins.getEnv. The ENV lines above still matter at container runtime, they
+# are just no longer an input to the build.
+RUN nix run /flake#homeConfigurations.headless-linux.activationPackage
 
 # home-manager's programs.fish.enable makes fish available and configures it,
 # but standalone home-manager (no full NixOS) can't write /etc/passwd -- that
