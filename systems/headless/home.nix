@@ -18,7 +18,7 @@
 #    user at the same path, so hardcoding them lets coder/Dockerfile activate
 #    this without --impure and makes the build reproducible from the flake
 #    alone.
-{ ... }: {
+{ pkgs, ... }: {
   home.username = "coder";
   home.homeDirectory = "/home/coder";
 
@@ -30,6 +30,23 @@
   ];
 
   profiles.gui.enable = false;
+
+  # Claude Code, installed here rather than in modules/base so the desktop and
+  # darwin profiles keep managing their own install. The container has no
+  # writable, persisted place for the native installer to live -- the home
+  # directory is a PVC seeded once from the image (see coder/Dockerfile), so an
+  # in-workspace `npm i -g` or curl-installer would have to be redone by hand
+  # after every reseed -- and the profile is the only thing the image actually
+  # ships. modules/base/claude-hooks.nix already writes ~/.claude/settings.json
+  # for every profile, so the container had the configuration without the
+  # binary until now.
+  #
+  # Unfree (Anthropic's commercial terms), which the allowUnfree above covers.
+  # The nixpkgs wrapper sets DISABLE_AUTOUPDATER=1, so the version is whatever
+  # the flake's nixpkgs pin carries and only moves on `nix flake update` plus a
+  # CI image rebuild -- deliberate for an image-baked profile, since a
+  # self-updating binary cannot write to the read-only store anyway.
+  home.packages = [ pkgs.claude-code ];
 
   # No `nixup` alias here on purpose. The container's profile is baked into
   # the image by coder/Dockerfile and rebuilt by CI, not switched in place --
