@@ -18,6 +18,7 @@
     gnumake
     pscale
     postgresql
+    claude-code
   ] ++ lib.optionals config.profiles.gui.enable [
     # A GUI editor in an otherwise headless-capable module. Gated rather than
     # moved to modules/apps because it belongs with the dev toolchain on a
