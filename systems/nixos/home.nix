@@ -8,6 +8,7 @@
     ../../modules/dev/spacetimedb.nix
     ../../modules/apps
     ../../modules/desktop
+    ../../modules/desktop/hyprland
     ../../modules/gaming
     ../../modules/gaming/obs.nix
   ];

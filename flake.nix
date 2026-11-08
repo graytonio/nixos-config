@@ -72,6 +72,10 @@
     # builtins.getEnv, so coder/Dockerfile activates it without --impure.
     homeConfigurations."headless-linux" = mkHome "x86_64-linux" ./systems/headless/home.nix;
 
+    # Desktop: a non-NixOS Linux PC with a display (the Arch gaming PC). The
+    # shell profile plus desktop and gaming apps. Needs --impure like shell-linux.
+    homeConfigurations."desktop-linux" = mkHome "x86_64-linux" ./systems/desktop-linux/home.nix;
+
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = { inherit inputs; };
       system = "x86_64-linux";

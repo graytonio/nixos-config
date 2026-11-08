@@ -6,6 +6,5 @@
     ./spotify.nix
     ./obsidian.nix
     ./media.nix
-    ./hyprland
   ];
 }
