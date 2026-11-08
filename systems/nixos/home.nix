@@ -37,6 +37,7 @@
 
   home.packages = with pkgs; [
     rocmPackages.rocm-runtime
+    lutris
   ];
 
   home.stateVersion = "24.05";

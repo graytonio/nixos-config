@@ -9,10 +9,6 @@ in
     pkgs.playerctl
   ];
 
-  programs.ncspot = {
-    enable = true;
-  };
-
   programs.spicetify = {
 	enable = true;
 	
